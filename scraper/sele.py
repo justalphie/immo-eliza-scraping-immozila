@@ -1,14 +1,18 @@
 import time
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from bs4 import BeautifulSoup
+import requests
+import re
 
 def get_website():
-    links = []
+    url = ""
     count = 0
-    driver = webdriver.Firefox()
+    links = []
+    options = webdriver.FirefoxOptions()
+    options.add_argument('--headless')
+    driver = webdriver.Firefox(options=options)
     driver.get("https://www.immoweb.be/nl")
     driver.maximize_window()
     time.sleep(5)
@@ -20,13 +24,27 @@ def get_website():
     time.sleep(5)
     findlist = driver.find_element(By.CSS_SELECTOR, "#searchBoxSubmitButton > span:nth-child(1)")
     findlist.click()
-    element = driver.find_elements(By.CSS_SELECTOR, "a")
-    href_value = element("href")
-    for href in href_value:
-        if count < 10:
-            links.append(href)
-            count += 1
-        else:
-            break
+    url = driver.current_url
+    r = requests.get(url)
+    print(url, r.status_code)
+    soup = BeautifulSoup(r.content, "html.parser")
+    for contentmain in soup.find_all("div",{"class":"container-main-content"}):
+        for a in contentmain.find_all("a", {"class":"card__title-link"}):
+            if count != 10:
+                links.append(a)
+                count += 1
+            else:
+                break
+    driver.close()
+    for id, i in enumerate(links):
+        text = str(i)
+        pattern = r'href="([^"]*)"'
+        match = re.search(pattern, text)
+        if match:
+            result = match.group(1)
+            print(result)
     return links
-get_website()
+    
+
+if __name__ == "__main__":
+    get_website()
