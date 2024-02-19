@@ -7,9 +7,14 @@ import requests
 import re
 
 def get_website():
+    c = 2
+    pages = 4
+    teller = 0
     url = ""
-    count = 0
     links = []
+    weblinks=[]
+
+
     options = webdriver.FirefoxOptions()
     options.add_argument('--headless')
     driver = webdriver.Firefox(options=options)
@@ -25,25 +30,47 @@ def get_website():
     findlist = driver.find_element(By.CSS_SELECTOR, "#searchBoxSubmitButton > span:nth-child(1)")
     findlist.click()
     url = driver.current_url
+    print(url)
+
+
     r = requests.get(url)
     print(url, r.status_code)
     soup = BeautifulSoup(r.content, "html.parser")
     for contentmain in soup.find_all("div",{"class":"container-main-content"}):
         for a in contentmain.find_all("a", {"class":"card__title-link"}):
-            if count != 10:
                 links.append(a)
-                count += 1
-            else:
-                break
-    driver.close()
     for id, i in enumerate(links):
         text = str(i)
         pattern = r'href="([^"]*)"'
         match = re.search(pattern, text)
         if match:
             result = match.group(1)
-            print(result)
-    return links
+            weblinks.append(result)
+            teller += 1
+    print(weblinks)
+
+    while c < pages:
+        button = driver.find_element(By.XPATH(""));
+        button.click()
+        url = driver.current_url
+        r = requests.get(url)
+        print(url, r.status_code)
+        soup = BeautifulSoup(r.content, "html.parser")
+        for contentmain in soup.find_all("div",{"class":"container-main-content"}):
+            for a in contentmain.find_all("a", {"class":"card__title-link"}):
+                    links.append(a)
+        for id, i in enumerate(links):
+            text = str(i)
+            pattern = r'href="([^"]*)"'
+            match = re.search(pattern, text)
+            if match:
+                result = match.group(1)
+                weblinks.append(result)
+                teller += 1
+        c += 1
+        print(weblinks)
+        
+    return weblinks
     
 
 if __name__ == "__main__":
