@@ -1,0 +1,86 @@
+
+        {
+            "user": {
+                "loginStatus": "logged out",
+                "id": "",
+                "personal": {
+                    "language": ""
+                }
+            },
+                        "classified": {
+                "id": "11148474",
+                "type": "apartment",
+                "subtype": "apartment",
+                "price": "265000",
+                "transactionType": "for sale",
+                "zip": "2830",
+                "visualisationOption": "l",
+                "kitchen": {
+                    "type": ""
+                },
+                "building": {
+                    "constructionYear": "2014",
+                    "condition": "as new"
+                },
+                "energy": {
+                    "heatingType": "gas"
+                },
+                "certificates": {
+                    "primaryEnergyConsumptionLevel": "135"
+                },
+                "bedroom": {
+                    "count": "3"
+                },
+                "land": {
+                    "surface": ""
+                },
+                "atticExists": "",
+                "basementExists": "",
+                "outdoor": {
+                    "garden": {
+                        "surface": ""
+                    },
+                    "terrace": {
+                        "exists": ""
+                    }
+                },
+                "specificities": {
+                    "SME": {
+                        "office": {
+                            "exists": ""
+                        }
+                    }
+                },
+                "wellnessEquipment": {
+                    "hasSwimmingPool": ""
+                },
+                "parking": {
+                    "parkingSpaceCount": {
+                        "indoor": "1",
+                        "outdoor": ""
+                    }
+                },
+                "condition": {
+                    "isNewlyBuilt": ""
+                }
+            },
+                                    "customer": {
+                "id": "2691918",
+                "name": "heylen vastgoed mechelen",
+                "family" : "agency",
+                "groupInfo": {
+                    "id": "",
+                    "name": ""
+                },
+                "networkInfo": {
+                    "id" : "",
+                    "name": ""
+                }
+            },
+                                    "screen": {
+                "name": "classified details",
+                "language": "nl"
+            }
+
+        }
+    
