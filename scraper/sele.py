@@ -1,0 +1,32 @@
+import time
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+def get_website():
+    links = []
+    count = 0
+    driver = webdriver.Firefox()
+    driver.get("https://www.immoweb.be/nl")
+    driver.maximize_window()
+    time.sleep(5)
+    shadow_host = driver.find_element(By.ID, 'usercentrics-root')
+    script = 'return arguments[0].shadowRoot'
+    shadow_root = driver.execute_script(script, shadow_host)
+    shadow_content = shadow_root.find_element(By.CSS_SELECTOR, 'button.sc-dcJsrY:nth-child(2)')
+    shadow_content.click()
+    time.sleep(5)
+    findlist = driver.find_element(By.CSS_SELECTOR, "#searchBoxSubmitButton > span:nth-child(1)")
+    findlist.click()
+    element = driver.find_elements(By.CSS_SELECTOR, "a")
+    href_value = element("href")
+    for href in href_value:
+        if count < 10:
+            links.append(href)
+            count += 1
+        else:
+            break
+    return links
+get_website()
