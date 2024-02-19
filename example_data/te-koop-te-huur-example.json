@@ -1,0 +1,402 @@
+{
+    "id": 11144723,
+    "cluster": null,
+    "customers": [
+        {
+            "id": 2663585,
+            "type": "AGENCY",
+            "email": "trust@omniwebsites.be",
+            "logoUrl": "https://static.immoweb.be/logos/2663585.gif?cache=2024341601237",
+            "phoneNumber": "+3210458663",
+            "mobileNumber": "+32 487200958",
+            "name": "TRUST REAL ESTATE",
+            "website": "http://www.trust-realestate.be",
+            "location": {
+                "country": "Belgi\u00eb",
+                "region": null,
+                "province": "Waals Brabant",
+                "district": "Nijvel",
+                "locality": "Grez-Doiceau",
+                "postalCode": "1390",
+                "street": "Chauss\u00e9e de la lib\u00e9ration 3",
+                "number": null,
+                "box": null,
+                "propertyName": null,
+                "floor": null,
+                "latitude": 50.7382605,
+                "longitude": 4.6943665,
+                "distance": null,
+                "approximated": null,
+                "regionCode": null,
+                "type": null,
+                "hasSeaView": null,
+                "pointsOfInterest": null,
+                "placeName": null
+            },
+            "ipiNo": "507295",
+            "isOwner": true,
+            "contactHoursMobile": "anytime",
+            "contactHoursLandline": "anytime",
+            "salesRepresentative": null,
+            "features": {
+                "page404": true,
+                "investorFlag": false,
+                "relatedClassifieds": true,
+                "leafletsCTA": false,
+                "leadQualification": true,
+                "recommendation": true
+            }
+        }
+    ],
+    "premiumProjectPage": {
+        "medias": null,
+        "options": null,
+        "promoter": null,
+        "tabs": null
+    },
+    "flags": {
+        "isPublicSale": false,
+        "isNewClassified": true,
+        "isNewPrice": false,
+        "isInvestmentProject": false,
+        "isNewlyBuilt": false,
+        "isNotarySale": null,
+        "isLifeAnnuitySale": false,
+        "adQuality": null,
+        "date": null,
+        "priceSqm": null,
+        "price": null,
+        "default": null,
+        "isSoldOrRented": false,
+        "isLowEnergy": null,
+        "percentSold": null,
+        "isPassiveHouse": null,
+        "isNewRealEstateProject": false,
+        "isAnInteractiveSale": null,
+        "isUnderOption": false
+    },
+    "media": {
+        "pictures": [
+            {
+                "smallUrl": "https://static.immoweb.be/photos/1/1/1/4/4/7/2/3/11144723_1.gif?cache=20240215125926",
+                "mediumUrl": "https://static.immoweb.be/photos/1/1/1/4/4/7/2/3/M_11144723_1.jpg?cache=20240215125926",
+                "largeUrl": "https://static.immoweb.be/photos/1/1/1/4/4/7/2/3/11144723_1.jpg?cache=20240215125926",
+                "isVertical": false
+            },
+            {
+                "smallUrl": "https://static.immoweb.be/photos/1/1/1/4/4/7/2/3/11144723_2.gif?cache=20240215125926",
+                "mediumUrl": "https://static.immoweb.be/photos/1/1/1/4/4/7/2/3/M_11144723_2.jpg?cache=20240215125926",
+                "largeUrl": "https://static.immoweb.be/photos/1/1/1/4/4/7/2/3/11144723_2.jpg?cache=20240215125926",
+                "isVertical": false
+            },
+            {
+                "smallUrl": "https://static.immoweb.be/photos/1/1/1/4/4/7/2/3/11144723_3.gif?cache=20240215125926",
+                "mediumUrl": "https://static.immoweb.be/photos/1/1/1/4/4/7/2/3/M_11144723_3.jpg?cache=20240215125926",
+                "largeUrl": "https://static.immoweb.be/photos/1/1/1/4/4/7/2/3/11144723_3.jpg?cache=20240215125926",
+                "isVertical": false
+            },
+            {
+                "smallUrl": "https://static.immoweb.be/photos/1/1/1/4/4/7/2/3/11144723_4.gif?cache=20240215125926",
+                "mediumUrl": "https://static.immoweb.be/photos/1/1/1/4/4/7/2/3/M_11144723_4.jpg?cache=20240215125926",
+                "largeUrl": "https://static.immoweb.be/photos/1/1/1/4/4/7/2/3/11144723_4.jpg?cache=20240215125926",
+                "isVertical": false
+            },
+            {
+                "smallUrl": "https://static.immoweb.be/photos/1/1/1/4/4/7/2/3/11144723_5.gif?cache=20240215125926",
+                "mediumUrl": "https://static.immoweb.be/photos/1/1/1/4/4/7/2/3/M_11144723_5.jpg?cache=20240215125926",
+                "largeUrl": "https://static.immoweb.be/photos/1/1/1/4/4/7/2/3/11144723_5.jpg?cache=20240215125926",
+                "isVertical": false
+            },
+            {
+                "smallUrl": "https://static.immoweb.be/photos/1/1/1/4/4/7/2/3/11144723_6.gif?cache=20240215125926",
+                "mediumUrl": "https://static.immoweb.be/photos/1/1/1/4/4/7/2/3/M_11144723_6.jpg?cache=20240215125926",
+                "largeUrl": "https://static.immoweb.be/photos/1/1/1/4/4/7/2/3/11144723_6.jpg?cache=20240215125926",
+                "isVertical": false
+            },
+            {
+                "smallUrl": "https://static.immoweb.be/photos/1/1/1/4/4/7/2/3/11144723_7.gif?cache=20240215125926",
+                "mediumUrl": "https://static.immoweb.be/photos/1/1/1/4/4/7/2/3/M_11144723_7.jpg?cache=20240215125926",
+                "largeUrl": "https://static.immoweb.be/photos/1/1/1/4/4/7/2/3/11144723_7.jpg?cache=20240215125926",
+                "isVertical": false
+            },
+            {
+                "smallUrl": "https://static.immoweb.be/photos/1/1/1/4/4/7/2/3/11144723_8.gif?cache=20240215125926",
+                "mediumUrl": "https://static.immoweb.be/photos/1/1/1/4/4/7/2/3/M_11144723_8.jpg?cache=20240215125926",
+                "largeUrl": "https://static.immoweb.be/photos/1/1/1/4/4/7/2/3/11144723_8.jpg?cache=20240215125926",
+                "isVertical": false
+            },
+            {
+                "smallUrl": "https://static.immoweb.be/photos/1/1/1/4/4/7/2/3/11144723_9.gif?cache=20240215125926",
+                "mediumUrl": "https://static.immoweb.be/photos/1/1/1/4/4/7/2/3/M_11144723_9.jpg?cache=20240215125926",
+                "largeUrl": "https://static.immoweb.be/photos/1/1/1/4/4/7/2/3/11144723_9.jpg?cache=20240215125926",
+                "isVertical": false
+            },
+            {
+                "smallUrl": "https://static.immoweb.be/photos/1/1/1/4/4/7/2/3/11144723_0.gif?cache=20240215125927",
+                "mediumUrl": "https://static.immoweb.be/photos/1/1/1/4/4/7/2/3/M_11144723_0.jpg?cache=20240215125927",
+                "largeUrl": "https://static.immoweb.be/photos/1/1/1/4/4/7/2/3/11144723_0.jpg?cache=20240215125927",
+                "isVertical": false
+            },
+            {
+                "smallUrl": "https://static.immoweb.be/photos/1/1/1/4/4/7/2/3/11144723_A.gif?cache=20240215125927",
+                "mediumUrl": "https://static.immoweb.be/photos/1/1/1/4/4/7/2/3/M_11144723_A.jpg?cache=20240215125927",
+                "largeUrl": "https://static.immoweb.be/photos/1/1/1/4/4/7/2/3/11144723_A.jpg?cache=20240215125927",
+                "isVertical": true
+            }
+        ],
+        "virtualTourUrl": null,
+        "floorPlans": null,
+        "specifications": null,
+        "virtualExperienceUrl": null
+    },
+    "property": {
+        "type": "APARTMENT",
+        "subtype": "APARTMENT",
+        "title": "Appartement",
+        "description": "Sorry er is geen nederlandse vertaling beschikbaar. Trust Real Estate vous propose ce superbe appartement neuf au rez-de-chauss\u00e9e 1 Chambres de +/- 87 m\u00b2, situ\u00e9 au c\u0153ur de Perwez  \u00e0 proximit\u00e9 imm\u00e9diate de la Grand-Place et \u00e0 distance \u00e0 pied de toutes les facilit\u00e9s (gare et arr\u00eat de bus, magasins, \u00e9coles, autoroute, ...) petite co-propri\u00e9t\u00e9 r\u00e9sidentielle, de standing aux finitions de qualit\u00e9.<br><br>L'appartement se compose comme suit: hall d'entr\u00e9e avec WC \u00ab invit\u00e9 \u00bb menant vers un spacieux et tr\u00e8s lumineux s\u00e9jour avec cuisine ouverte totalement \u00e9quip\u00e9e (four, taques, hotte, frigo, l-v), 1 grande chambre de 14 m\u00b2, une salle de bain (douche \u00e0 l'italienne, bain, meuble double vasque et s\u00e8che serviette) et une buanderie. L'appartement disposede 1 terrasse orient\u00e9e Ouest.<br>Un emplacement de parking ext\u00e9rieur obligatoire accompagne l'appartement moyennant 50\u20ac/mois.<br><br>Loyer mensuel : 940 \u20ac + 50\u20ac parking + 20\u20ac de provision de charge communes par mois.<br><br>Niveau technique: copropri\u00e9t\u00e9 sans ascenseur (peu de frais), cuisines Eggo avec \u00e9lectrom\u00e9nager AEG, vid\u00e9ophone, compteurs individuels (eau, gaz, \u00e9lectricit\u00e9), chaudi\u00e8re individuelle \u00e0 condensation Vaillant, ch\u00e2ssis PVC imitation bois, double vitrage, PEB B et ventilation syst\u00e8me C.<br><br>N'h\u00e9sitez pas \u00e0 nous contacter, nous nous ferons un plaisir de vous pr\u00e9senter l'appartement. Immobili\u00e8re Trust, t\u00e9l. 010/45.86.63 ou Legros Florence au 0485/47.82.96",
+        "name": null,
+        "isHolidayProperty": null,
+        "bedroomCount": 1,
+        "bedrooms": [
+            {
+                "surface": 15
+            }
+        ],
+        "bathroomCount": 1,
+        "bathrooms": [],
+        "location": {
+            "country": "Belgi\u00eb",
+            "region": "Wallon\u00efe",
+            "province": "Waals Brabant",
+            "district": "Nijvel",
+            "locality": "Perwijs",
+            "postalCode": "1360",
+            "street": "Rue Piconette",
+            "number": "4, 01",
+            "box": null,
+            "propertyName": null,
+            "floor": 0,
+            "latitude": 50.622756,
+            "longitude": 4.8149002,
+            "distance": null,
+            "approximated": null,
+            "regionCode": "WALLONIE",
+            "type": null,
+            "hasSeaView": null,
+            "pointsOfInterest": [
+                {
+                    "type": "SCHOOL",
+                    "distance": -1
+                },
+                {
+                    "type": "SHOPS",
+                    "distance": -1
+                },
+                {
+                    "type": "TRANSPORT",
+                    "distance": -1
+                }
+            ],
+            "placeName": null
+        },
+        "netHabitableSurface": 87,
+        "roomCount": null,
+        "monthlyCosts": 20,
+        "attic": null,
+        "hasAttic": null,
+        "basement": null,
+        "hasBasement": null,
+        "hasDressingRoom": null,
+        "diningRoom": {
+            "surface": null
+        },
+        "hasDiningRoom": true,
+        "building": {
+            "annexCount": null,
+            "condition": null,
+            "constructionYear": null,
+            "facadeCount": 2,
+            "floorCount": 2,
+            "streetFacadeWidth": null
+        },
+        "propertyCertificates": {
+            "builtPlanStatus": "NO",
+            "globalInsulationLevel": null,
+            "oilTankCertificateStatus": null,
+            "primaryEnergyConsumptionLevel": 0
+        },
+        "hasCaretakerOrConcierge": null,
+        "hasDisabledAccess": null,
+        "hasLift": null,
+        "constructionPermit": {
+            "constructionType": null,
+            "floodZoneType": null,
+            "isObtained": null,
+            "hasObligationToConstruct": null,
+            "hasPlotDivisionAuthorization": null,
+            "hasPossiblePriorityPurchaseRight": null,
+            "isBreachingUrbanPlanningRegulation": null,
+            "floodZoneIconUrl": null,
+            "totalBuildableGroundFloorSurface": 0,
+            "urbanPlanningInformation": null,
+            "pScore": null,
+            "gScore": null
+        },
+        "energy": {
+            "heatingType": "GAS",
+            "hasHeatPump": null,
+            "hasPhotovoltaicPanels": null,
+            "hasThermicPanels": null,
+            "hasCollectiveWaterHeater": null,
+            "hasDoubleGlazing": true,
+            "performance": null
+        },
+        "kitchen": {
+            "surface": 16,
+            "type": "HYPER_EQUIPPED",
+            "hasOven": null,
+            "hasMicroWaveOven": null,
+            "hasDishwasher": null,
+            "hasWashingMachine": null,
+            "hasFridge": null,
+            "hasFreezer": null,
+            "hasSteamOven": null
+        },
+        "land": null,
+        "laundryRoom": null,
+        "hasLaundryRoom": null,
+        "livingRoom": {
+            "surface": 26
+        },
+        "hasLivingRoom": true,
+        "isFirstOccupation": null,
+        "hasBalcony": null,
+        "hasBarbecue": null,
+        "hasGarden": null,
+        "gardenSurface": null,
+        "gardenOrientation": null,
+        "parkingCountIndoor": null,
+        "parkingCountOutdoor": 1,
+        "parkingCountClosedBox": null,
+        "hasAirConditioning": null,
+        "hasArmoredDoor": null,
+        "hasVisiophone": true,
+        "hasSecureAccessAlarm": null,
+        "hasCableTV": true,
+        "hasDoorPhone": null,
+        "hasInternet": null,
+        "showerRoomCount": 0,
+        "showerRooms": [],
+        "specificities": null,
+        "toiletCount": 1,
+        "toilets": [],
+        "hasFitnessRoom": null,
+        "hasTennisCourt": null,
+        "hasSwimmingPool": null,
+        "hasSauna": null,
+        "hasJacuzzi": null,
+        "hasHammam": null,
+        "bedroomSurface": null,
+        "alternativeDescriptions": {
+            "en": "Sorry, there is no English translation. Trust Real Estate vous propose ce superbe appartement neuf au rez-de-chauss\u00e9e 1 Chambres de +/- 87 m\u00b2, situ\u00e9 au c\u0153ur de Perwez  \u00e0 proximit\u00e9 imm\u00e9diate de la Grand-Place et \u00e0 distance \u00e0 pied de toutes les facilit\u00e9s (gare et arr\u00eat de bus, magasins, \u00e9coles, autoroute, ...) petite co-propri\u00e9t\u00e9 r\u00e9sidentielle, de standing aux finitions de qualit\u00e9.<br><br>L'appartement se compose comme suit: hall d'entr\u00e9e avec WC \u00ab invit\u00e9 \u00bb menant vers un spacieux et tr\u00e8s lumineux s\u00e9jour avec cuisine ouverte totalement \u00e9quip\u00e9e (four, taques, hotte, frigo, l-v), 1 grande chambre de 14 m\u00b2, une salle de bain (douche \u00e0 l'italienne, bain, meuble double vasque et s\u00e8che serviette) et une buanderie. L'appartement dispose de 1terrasse orient\u00e9e Ouest.<br>Un emplacement de parking ext\u00e9rieur obligatoire accompagne l'appartement moyennant 50\u20ac/mois.<br><br>Loyer mensuel : 940 \u20ac + 50\u20ac parking + 20\u20ac de provision de charge communes par mois.<br><br>Niveau technique: copropri\u00e9t\u00e9 sans ascenseur (peu de frais), cuisines Eggo avec \u00e9lectrom\u00e9nager AEG, vid\u00e9ophone, compteurs individuels (eau, gaz, \u00e9lectricit\u00e9), chaudi\u00e8re individuelle \u00e0 condensation Vaillant, ch\u00e2ssis PVC imitation bois, double vitrage, PEB B et ventilation syst\u00e8me C.<br><br>N'h\u00e9sitez pas \u00e0 nous contacter, nous nous ferons un plaisir de vous pr\u00e9senter l'appartement. Immobili\u00e8re Trust, t\u00e9l. 010/45.86.63 ou Legros Florence au 0485/47.82.96",
+            "fr": "Trust Real Estate vous propose ce superbe appartement neuf au rez-de-chauss\u00e9e 1 Chambres de +/- 87 m\u00b2, situ\u00e9 au c\u0153ur de Perwez  \u00e0 proximit\u00e9 imm\u00e9diate de la Grand-Place et \u00e0 distance \u00e0 pied de toutes les facilit\u00e9s (gare et arr\u00eat de bus, magasins, \u00e9coles, autoroute, ...) petite co-propri\u00e9t\u00e9 r\u00e9sidentielle, de standing aux finitions de qualit\u00e9.<br><br>L'appartement se compose comme suit: hall d'entr\u00e9e avec WC \u00ab invit\u00e9 \u00bb menant vers un spacieux et tr\u00e8s lumineux s\u00e9jour avec cuisine ouverte totalement \u00e9quip\u00e9e (four, taques, hotte, frigo, l-v), 1 grande chambre de 14 m\u00b2, une salle de bain (douche \u00e0 l'italienne, bain, meuble double vasque et s\u00e8che serviette) et une buanderie. L'appartement dispose de 1 terrasse orient\u00e9e Ouest.<br>Un emplacement deparking ext\u00e9rieur obligatoire accompagne l'appartement moyennant 50\u20ac/mois.<br><br>Loyer mensuel : 940 \u20ac + 50\u20ac parking + 20\u20ac de provision de charge communes par mois.<br><br>Niveau technique: copropri\u00e9t\u00e9 sans ascenseur (peu de frais), cuisines Eggo avec \u00e9lectrom\u00e9nager AEG, vid\u00e9ophone, compteurs individuels (eau, gaz, \u00e9lectricit\u00e9), chaudi\u00e8re individuelle \u00e0 condensation Vaillant, ch\u00e2ssis PVC imitation bois, double vitrage, PEB B et ventilation syst\u00e8me C.<br><br>N'h\u00e9sitez pas \u00e0 nous contacter, nous nous ferons un plaisir de vous pr\u00e9senter l'appartement. Immobili\u00e8re Trust, t\u00e9l. 010/45.86.63 ou Legros Florence au 0485/47.82.96"
+        },
+        "habitableUnitCount": null,
+        "fireplaceCount": -1,
+        "fireplaceExists": true,
+        "hasTerrace": true,
+        "terraceSurface": 10,
+        "terraceOrientation": null
+    },
+    "publication": {
+        "creationDate": "2024-02-15T12:55:08.000+0000",
+        "expirationDate": "2024-04-14T23:00:00.000+0000",
+        "publisherId": null,
+        "visualisationOption": "XL",
+        "lastModificationDate": "2024-02-19T09:48:57.103+0000"
+    },
+    "transaction": {
+        "type": "FOR_RENT",
+        "subtype": "RENT_REGULAR",
+        "availabilityPeriodType": "IMMEDIATELY",
+        "availabilityDate": null,
+        "certificates": {
+            "carbonEmission": 26,
+            "hasElectricalInstallationComplianceCertificate": null,
+            "primaryEnergyConsumptionPerSqm": 133,
+            "primaryEnergyConsumptionYearly": 14675,
+            "epcDescription": null,
+            "epcReference": "20230828012842",
+            "epcScore": "B",
+            "epcUrl": "https://static.immoweb.be/pics/peb/peb_b.png"
+        },
+        "rental": {
+            "monthlyRentalPrice": 940,
+            "monthlyRentalCosts": 20,
+            "yearlyRentalPrice": null,
+            "yearlyRentalPricePerSqm": null,
+            "isFurnished": null,
+            "areSmallPetsAllowed": null,
+            "areBigPetsAllowed": null
+        },
+        "sale": null,
+        "investor": {
+            "isInvestmentProperty": false,
+            "currentMonthlyRentalIncome": null,
+            "currentReturnOnInvestment": null,
+            "expectedMonthlyRentalIncome": null,
+            "expectedMonthlyRentalIncomeDescription": null,
+            "expectedReturnOnInvestment": null,
+            "habitableUnitCount": null,
+            "occupancyRate": null
+        }
+    },
+    "priceType": null,
+    "price": {
+        "type": "residential_monthly_rent",
+        "mainValue": 940,
+        "alternativeValue": null,
+        "additionalValue": 20,
+        "oldValue": null,
+        "minRangeValue": null,
+        "maxRangeValue": null,
+        "mainDisplayPrice": "\u20ac\u00a0940 (+ \u20ac\u00a020)",
+        "HTMLDisplayPrice": "<span aria-hidden=\"true\">\u20ac\u00a0940 (+ \u20ac\u00a020)</span>",
+        "alternativeDisplayPrice": "",
+        "oldDisplayPrice": null,
+        "shortDisplayPrice": "\u20ac&nbsp;940",
+        "accessibilityPrice": "940\u20ac + 20\u20ac per maand",
+        "label": "Gevraagde maandelijkse huurprijs",
+        "date": null,
+        "language": "nl"
+    },
+    "externalReference": "13940 - 4606634",
+    "isBookmarked": false,
+    "hasSectionsArray": {
+        "hasGeneralSection": true,
+        "hasInteriorSection": true,
+        "hasExteriorSection": true,
+        "hasFacilitiesSection": true,
+        "hasEnergySection": true,
+        "hasPlanningSection": false,
+        "hasFinancialSection": true,
+        "hasPublicSaleSection": false
+    },
+    "unitGroupings": [],
+    "displayFlags": {
+        "main": "new",
+        "secondary": [],
+        "percentSold": null
+    },
+    "statistics": {
+        "bookmarkCount": 12,
+        "viewCount": 129,
+        "alertPrice": null,
+        "creationDate": null,
+        "description": null,
+        "isAlertEmailSet": null,
+        "rating": null,
+        "wasOwnerContacted": null,
+        "wasPropertyVisited": null
+    }
+}
