@@ -26,12 +26,12 @@ def immolinks(n):
                 weblinks.append(result)
     print(weblinks)
     print(len(weblinks))
-    write_csv(weblinks)
+    write_json(weblinks)
     return weblinks
 
-def write_csv(weblinks):
+def write_json(weblinks):
     with open("weblinksimmo.json", 'w') as output_file:
         print(json.dumps(weblinks, indent=2), file=output_file)
 
 if __name__ == "__main__":
-    immolinks(5)
+    immolinks(100)
