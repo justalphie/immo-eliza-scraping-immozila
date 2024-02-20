@@ -9,8 +9,8 @@ def main():
     # Iterate through each element in the list
     for url in data:
         scrape_url = PropertyScraper(url)
-        x = scrape_url.scrape_property_info()
-        print(x)
+        dataframe_to_print = scrape_url.scrape_property_info()
+        print(dataframe_to_print)
 
 if __name__ == "__main__":
     main()
