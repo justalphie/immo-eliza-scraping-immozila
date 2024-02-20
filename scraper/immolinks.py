@@ -8,7 +8,6 @@ import csv
 def immolinks(n):
     links=[]
     weblinks=[]
-    teller = 0
     root_url = "https://www.immoweb.be/nl/zoeken/huis/te-koop?countries=BE&page="
     for number in range(1, n+1):
         pages_url = f"{root_url}{number}&orderBy=relevance"
@@ -25,10 +24,14 @@ def immolinks(n):
             if match:
                 result = match.group(1)
                 weblinks.append(result)
-                teller += 1
     print(weblinks)
-    print(teller)
+    print(len(weblinks))
+    write_csv(weblinks)
     return weblinks
 
+def write_csv(weblinks):
+    with open("weblinksimmo.json", 'w') as output_file:
+        print(json.dumps(weblinks, indent=2), file=output_file)
+
 if __name__ == "__main__":
-    immolinks(3)
+    immolinks(5)
