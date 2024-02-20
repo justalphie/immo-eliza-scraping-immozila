@@ -110,7 +110,7 @@ class PropertyScraper():
                     "type_of_sale":data_dictionary["transaction"]["subtype"],
                     "nb_of_rooms":self._check_data(data_dictionary["property"]["roomCount"]),
                     "area":self._check_data(data_dictionary["property"]["netHabitableSurface"]),
-                 #   "fully_equipped_kitchen":self._check_kitchen(data_dictionary["property"]["kitchen"]),
+                    "fully_equipped_kitchen":self._check_kitchen(data_dictionary["property"]["kitchen"]),
                     "furnished":self._check_boolean(data_dictionary["transaction"]["sale"]["isFurnished"]),
                     "open_fire":self._check_boolean(data_dictionary["property"]["fireplaceExists"]),
                     "terrace":self._check_boolean(data_dictionary["property"]["hasTerrace"]),
@@ -118,9 +118,9 @@ class PropertyScraper():
                     "garden":self._check_boolean(data_dictionary["property"]["hasGarden"]),
                     "garden_area":self._check_garden(data_dictionary["property"]),
                     "surface_of_good":0,
-                 #   "nb_of_facades":self._check_data(data_dictionary["property"]["building"]["facadeCount"]),
+                    "nb_of_facades":self._check_data(data_dictionary["property"]["building"]["facadeCount"]),
                     "swimming_pool":self._check_boolean(data_dictionary["property"]["hasSwimmingPool"]),
-                 #   "state_of_building":self._check_data(data_dictionary["property"]["building"]["condition"])
+                    "state_of_building":self._check_data(data_dictionary["property"]["building"]["condition"])
         }]
         
         return new_data
