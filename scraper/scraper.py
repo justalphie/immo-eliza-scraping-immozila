@@ -13,12 +13,13 @@ class PropertyScraper():
         
     def scrape_property_info(self):
         """
-        This method scrapes information from a single property URL and stores it in a dictionary
+        This is the main method that scrapes information from a single property URL 
+        and stores
         """
+        
         property_dict = self._fetch_all_info_from_property()
-        new_data = self._check_sale(property_dict)
-        df = pd.concat([df, pd.DataFrame(new_data)])
-        return df
+        scraped_data = self._check_sale(property_dict)
+        return scraped_data
     
 
     def _fetch_all_info_from_property(self):
@@ -98,17 +99,6 @@ class PropertyScraper():
         if dictionary["transaction"]["type"] == "FOR_SALE":
             return self._data_to_insert_in_dataframe(dictionary)
         
-    
-    ## not yet sure if this is needed, for now not used
-    def building_a_dataframe(self):
-        
-        columns = ["property_id", "locality_name","property_type","property_subtype","price", "type_of_sale","nb_of_rooms", "area",
-                "fully_equipped_kitchen", "furnished", "open_fire","terrace", "terrace_area","garden", "garden_area",
-                "surface", "surface_area_plot", "nb_of_facades", "swimming_pool", "state_of_building"]
-        df = pd.DataFrame(columns=columns)
-        print(df)
-
-
     def _data_to_insert_in_dataframe(self, data_dictionary):
         
         new_data = [{ "property_id": self._check_data(data_dictionary["id"]),
@@ -120,7 +110,7 @@ class PropertyScraper():
                     "type_of_sale":data_dictionary["transaction"]["subtype"],
                     "nb_of_rooms":self._check_data(data_dictionary["property"]["roomCount"]),
                     "area":self._check_data(data_dictionary["property"]["netHabitableSurface"]),
-                    "fully_equipped_kitchen":self._check_kitchen(data_dictionary["property"]["kitchen"]),
+                 #   "fully_equipped_kitchen":self._check_kitchen(data_dictionary["property"]["kitchen"]),
                     "furnished":self._check_boolean(data_dictionary["transaction"]["sale"]["isFurnished"]),
                     "open_fire":self._check_boolean(data_dictionary["property"]["fireplaceExists"]),
                     "terrace":self._check_boolean(data_dictionary["property"]["hasTerrace"]),
@@ -128,9 +118,9 @@ class PropertyScraper():
                     "garden":self._check_boolean(data_dictionary["property"]["hasGarden"]),
                     "garden_area":self._check_garden(data_dictionary["property"]),
                     "surface_of_good":0,
-                    "nb_of_facades":self._check_data(data_dictionary["property"]["building"]["facadeCount"]),
+                 #   "nb_of_facades":self._check_data(data_dictionary["property"]["building"]["facadeCount"]),
                     "swimming_pool":self._check_boolean(data_dictionary["property"]["hasSwimmingPool"]),
-                    "state_of_building":self._check_data(data_dictionary["property"]["building"]["condition"])
+                 #   "state_of_building":self._check_data(data_dictionary["property"]["building"]["condition"])
         }]
         
         return new_data
