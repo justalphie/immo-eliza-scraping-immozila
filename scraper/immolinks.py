@@ -34,4 +34,4 @@ def write_json(weblinks):
         print(json.dumps(weblinks, indent=2), file=output_file)
 
 if __name__ == "__main__":
-    immolinks(100)
+    immolinks(1)
