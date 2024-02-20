@@ -5,19 +5,26 @@ import re
 from httpx import AsyncClient
 import asyncio
 import time
-    
-def immolinksall(n):
+import concurrent
+
+
+def immo_pagelinks(n):
     """
     Starting from a root_url fetches the immoweb links for n pages
     """
-    weblinks=[]
+    immopagelinks=[]
     root_url = "https://www.immoweb.be/nl/zoeken/huis/te-koop?countries=BE&page="
-    seen_links = set()
 
     for number in range(1, n+1):
-        pages_url = f"{root_url}{number}&orderBy=relevance"
-        r = requests.get(pages_url)
-        print(pages_url, r.status_code)
+        immopagelinks.append(f"{root_url}{number}&orderBy=relevance")
+    return immopagelinks
+
+def immo_weblinks(pages_url):
+    weblinks=[]
+    seen_links = set()
+
+    with requests.Session() as session:
+        r = session.get(pages_url)
         soup = BeautifulSoup(r.content, "html.parser")
         for contentmain in soup.find_all("div", {"class": "container-main-content"}):
             for a in contentmain.find_all("a", {"class": "card__title-link"}):
@@ -25,22 +32,10 @@ def immolinksall(n):
                 if link and link not in seen_links:
                     seen_links.add(link)
                     weblinks.append(link)
-    
-    print(weblinks)
-
-    # number of weblinks fetched from the pages
-    print(len(weblinks))
-    write_json(weblinks)
-    write_json_houses(weblinks)
-    write_json_appartment(weblinks)
-    
+    print("done")
     return weblinks
 
-
 def write_json(weblinks):
-    """
-    Write the immoweb links to a csv file
-    """
     with open("./data/weblinksimmo.json", 'w') as output_file:
         print(json.dumps(weblinks, indent=2), file=output_file)
 
@@ -56,5 +51,21 @@ def write_json_appartment(weblinks):
     with open("./data/weblinksimmoappartment.json", 'w') as output_file:
         json.dump(filtered_links, output_file, indent=2)
 
+def multiWeblinks():
+    page_links = immo_pagelinks(300)
+    
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        results = list(executor.map(immo_weblinks, page_links))
+
+    weblinks = []
+    for sublist in results:
+        for link in sublist:
+            weblinks.append(link)
+
+    return weblinks
+
 if __name__ == "__main__":
-    immolinksall(3)
+    weblinks = multiWeblinks()
+    write_json(weblinks)
+    write_json_houses(weblinks)
+    write_json_appartment(weblinks)
