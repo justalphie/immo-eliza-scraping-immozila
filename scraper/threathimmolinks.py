@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import json
 import asyncio
 import concurrent
+import csv
 
 
 def immo_pagelinks(n):
@@ -32,7 +33,6 @@ def immo_weblinks(pages_url):
                 if link and link not in seen_links:
                     seen_links.add(link)
                     weblinks.append(link)
-    print("done")
     return weblinks
 
 
@@ -56,7 +56,7 @@ def write_json_appartment(weblinks):
 
 
 def multiWeblinks():
-    page_links = immo_pagelinks(300)
+    page_links = immo_pagelinks(2)
     
     with concurrent.futures.ThreadPoolExecutor() as executor:
         results = list(executor.map(immo_weblinks, page_links))
@@ -69,6 +69,13 @@ def multiWeblinks():
 
     return weblinks
 
+def write_csv(list_data):
+    fieldnames = list_data[0].keys()
+    with open("./data/cleaned/immoinfo.csv", 'w', newline='', encoding='utf-8') as csv_file_object:
+        writer = csv.DictWriter(csv_file_object, fieldnames=fieldnames)
+        writer.writeheader()
+        for row_dict in list_data:
+            writer.writerow(row_dict)
 
 if __name__ == "__main__":
     weblinks = multiWeblinks()
