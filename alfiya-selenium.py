@@ -20,7 +20,7 @@ def get_properties_urls():
     start_search_button = driver.find_element(By.CSS_SELECTOR, "#searchBoxSubmitButton > span:nth-child(1)")
     start_search_button.click()
 
-    while len(properties_urls) < 500:
+    while len(properties_urls) < 1000:
 
         search_results = driver.find_element(By.ID, 'searchResults')
         card_links = search_results.find_elements(By.CSS_SELECTOR, '.card__title-link')
