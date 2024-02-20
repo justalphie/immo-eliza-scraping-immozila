@@ -1,10 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import json
-import re
-from httpx import AsyncClient
 import asyncio
-import time
 import concurrent
 
 
@@ -19,6 +16,7 @@ def immo_pagelinks(n):
         immopagelinks.append(f"{root_url}{number}&orderBy=relevance")
     return immopagelinks
 
+
 def immo_weblinks(pages_url):
     weblinks=[]
     seen_links = set()
@@ -26,7 +24,9 @@ def immo_weblinks(pages_url):
     with requests.Session() as session:
         r = session.get(pages_url)
         soup = BeautifulSoup(r.content, "html.parser")
+        
         for contentmain in soup.find_all("div", {"class": "container-main-content"}):
+            
             for a in contentmain.find_all("a", {"class": "card__title-link"}):
                 link = a.get('href')
                 if link and link not in seen_links:
@@ -35,9 +35,11 @@ def immo_weblinks(pages_url):
     print("done")
     return weblinks
 
+
 def write_json(weblinks):
     with open("./data/weblinksimmo.json", 'w') as output_file:
         print(json.dumps(weblinks, indent=2), file=output_file)
+
 
 def write_json_houses(weblinks):
     filtered_links = [link for link in weblinks if "huis" in link.lower() or "villa" in link.lower() or "herenhuis" in link.lower()]
@@ -45,11 +47,13 @@ def write_json_houses(weblinks):
     with open("./data/weblinksimmohouse.json", 'w') as output_file:
         json.dump(filtered_links, output_file, indent=2)
 
+
 def write_json_appartment(weblinks):
     filtered_links = [link for link in weblinks if "appartement" in link.lower() or "studio" in link.lower()]
 
     with open("./data/weblinksimmoappartment.json", 'w') as output_file:
         json.dump(filtered_links, output_file, indent=2)
+
 
 def multiWeblinks():
     page_links = immo_pagelinks(300)
@@ -58,11 +62,13 @@ def multiWeblinks():
         results = list(executor.map(immo_weblinks, page_links))
 
     weblinks = []
+    
     for sublist in results:
         for link in sublist:
             weblinks.append(link)
 
     return weblinks
+
 
 if __name__ == "__main__":
     weblinks = multiWeblinks()
