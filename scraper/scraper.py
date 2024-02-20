@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import json
+import pandas as pd
 
 
 class PropertyScraper():
@@ -15,7 +16,11 @@ class PropertyScraper():
         This method scrapes information from a single property URL and stores it in a dictionary
         """
         property_dict = self._fetch_all_info_from_property()
-        return self._create_column_dictionary(property_dict)
+        property_columns = self._create_column_dictionary(property_dict)
+        new_data = self.check_sale(property_columns)
+        df = pd.concat([df, pd.DataFrame(new_data)])
+        return df
+    
 
         
 
@@ -150,3 +155,86 @@ class PropertyScraper():
         #print(temp_columns_dict)
         return temp_columns_dict
     
+    
+    def check_data(self, data):
+        if data == "null" or data is None:
+            return None
+        else:
+            return data
+
+
+    def check_kitchen(self, data):
+        for keys in data:
+            if data[keys] == "null":
+                return 0
+            else:
+                return 1
+
+
+    # changes boolean into numeric values
+    def check_boolean(self, data):
+        if data is None or data == "null":
+            return None
+        elif data == True:
+            return 1
+        else:
+            return 0
+
+
+    # checks if garden is there and return surface if possible
+    def check_garden(self, data):
+        if data["hasGarden"] == True:
+            return self.check_data(data["gardenSurface"])
+        else:
+            return "null"
+
+
+    # Checks if terrace is there and returns thesruface area of it
+    def check_terrace(self, data):
+        if data["hasTerrace"] == True:
+            return self.check_data(data["terraceSurface"])
+        else:
+            return "null"
+
+
+    def check_sale(self, dictionary):
+        if dictionary["transaction"]["type"] == "FOR_SALE":
+            return self.insert_dataframe(dictionary)
+        
+    
+    
+    def building_a_dataframe(self):
+        
+        columns = ["id", "locality","property_type","property_subtype","price", "type_of_sale","nb_rooms", "area",
+                "fully_equipped_kitchen", "furnished", "open_fire","terrace", "terrace_area","garden", "garden_area",
+                "surface", "surface_area_plot", "nb_facades", "swimming_pool", "state_of_building"]
+        df = pd.DataFrame(columns=columns)
+        print(df)
+
+
+    def insert_dataframe(self, data_dictionary):
+        
+        new_data = [{ "id": self.check_data(data_dictionary["id"]),
+                    "locality":self.check_data(data_dictionary["property"]["location"]["locality"]),
+                    "postal_code":self.check_data(data_dictionary["property"]["location"]["postalCode"]),
+                    "property_type":self.check_data(data_dictionary["property"]["type"]),
+                    "property_subtype":self.check_data(data_dictionary["property"]["subtype"]),
+                    "price":self.check_data(data_dictionary["price"]["mainValue"]),
+                    "type_of_sale":self.data_dictionary["transaction"]["subtype"],
+                    "nb_rooms":self.check_data(data_dictionary["property"]["roomCount"]),
+                    "area":self.check_data(data_dictionary["property"]["netHabitableSurface"]),
+                    "fully_equipped_kitchen":self.check_kitchen(data_dictionary["property"]["kitchen"]),
+                    "furnished":self.check_boolean(data_dictionary["transaction"]["sale"]["isFurnished"]),
+                    "open_fire":self.check_boolean(data_dictionary["property"]["fireplaceExists"]),
+                    "terrace":self.check_boolean(data_dictionary["property"]["hasTerrace"]),
+                    "terrace_area":self.check_terrace(data_dictionary["property"]),
+                    "garden":self.check_boolean(data_dictionary["property"]["hasGarden"]),
+                    "garden_area":self.check_garden(data_dictionary["property"]),
+                    "surface_of_good":0,
+                    "nb_facades":self.check_data(data_dictionary["property"]["building"]["facadeCount"]),
+                    "swimming_pool":self.check_boolean(data_dictionary["property"]["hasSwimmingPool"]),
+                    "state_of_building":self.check_data(data_dictionary["property"]["building"]["condition"])
+        }]
+        
+        return new_data
+
