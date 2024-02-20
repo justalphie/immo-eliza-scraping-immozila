@@ -18,7 +18,7 @@ def main():
         dataframe_to_print = scrape_url.scrape_property_info()
         df = pd.concat([df, pd.DataFrame(dataframe_to_print)])
     print(df)    
-        # print(dataframe_to_print)
+    df.to_csv("./data/csvdump.csv", sep=',', index=False, encoding='utf-8')    
 
 if __name__ == "__main__":
     main()

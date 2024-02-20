@@ -16,13 +16,12 @@ class PropertyScraper():
         This is the main method that scrapes information from a single property URL 
         and stores
         """
-        
         property_dict = self._fetch_all_info_from_property()
         scraped_data = self._check_sale(property_dict)
         return scraped_data
     
 
-    def _fetch_all_info_from_property(self):
+    def _fetch_all_info_from_property(self) -> dict:
         """
         This private method scrapes information from a single property URL and stores it in a dictionary
         """
@@ -38,8 +37,8 @@ class PropertyScraper():
 
         for tag in result_data:
             if 'window.classified' in str(tag.string):
-                window_classified_data = tag.string
-
+                window_classified_data = str(tag.string)
+        
         window_classified_data.strip()            
         window_classified_data = window_classified_data[window_classified_data.find("{"):window_classified_data.rfind("}")+1]
 
@@ -54,14 +53,20 @@ class PropertyScraper():
         return property_dict
             
     
-    def _check_data(self, data):
+    def _clean_data(self, data):
+        """
+        checks if property parameter is available or if property parameter is empty
+        """
         if data == "null" or data is None:
             return None
         else:
             return data
 
 
-    def _check_kitchen(self, data):
+    def _get_fully_equiped_kitchen(self, data):
+        """
+        checks if kitchen is fully equiped
+        """
         for keys in data:
             if data[keys] == "null":
                 return 0
@@ -69,8 +74,10 @@ class PropertyScraper():
                 return 1
 
 
-    # changes boolean into numeric values
-    def _check_boolean(self, data):
+    def _convert_to_boolean(self, data):
+        """
+        changes boolean into numeric values
+        """
         if data is None or data == "null":
             return None
         elif data == True:
@@ -79,48 +86,58 @@ class PropertyScraper():
             return 0
 
 
-    # checks if garden is there and return surface if possible
-    def _check_garden(self, data):
+    def _get_garden_surface(self, data):
+        """
+        checks if garden is there and return surface if possible
+        """
         if data["hasGarden"] == True:
-            return self._check_data(data["gardenSurface"])
+            return self._clean_data(data["gardenSurface"])
         else:
-            return "null"
+            return None
 
 
-    # Checks if terrace is there and returns thesruface area of it
-    def _check_terrace(self, data):
+    # Checks if terrace is there and returns the surface area of it
+    def _get_terrace_surface(self, data):
+        """
+        checks if terrace is there and if so returns surface area of it 
+        """
         if data["hasTerrace"] == True:
-            return self._check_data(data["terraceSurface"])
+            return self._clean_data(data["terraceSurface"])
         else:
-            return "null"
+            return None
 
 
     def _check_sale(self, dictionary):
+        """
+        checks if property is for sale
+        """
         if dictionary["transaction"]["type"] == "FOR_SALE":
             return self._data_to_insert_in_dataframe(dictionary)
         
     def _data_to_insert_in_dataframe(self, data_dictionary):
-        
-        new_data = [{ "property_id": self._check_data(data_dictionary["id"]),
-                    "locality_name":self._check_data(data_dictionary["property"]["location"]["locality"]),
-                    "postal_code":self._check_data(data_dictionary["property"]["location"]["postalCode"]),
-                    "property_type":self._check_data(data_dictionary["property"]["type"]),
-                    "property_subtype":self._check_data(data_dictionary["property"]["subtype"]),
-                    "price":self._check_data(data_dictionary["price"]["mainValue"]),
+        """
+        building a dictionary with all the scraped data
+        """
+        new_data = [{ "property_id": self._clean_data(data_dictionary["id"]),
+                    "locality_name":self._clean_data(data_dictionary["property"]["location"]["locality"]),
+                    "postal_code":self._clean_data(data_dictionary["property"]["location"]["postalCode"]),
+                    "property_type":self._clean_data(data_dictionary["property"]["type"]),
+                    "property_subtype":self._clean_data(data_dictionary["property"]["subtype"]),
+                    "price":self._clean_data(data_dictionary["price"]["mainValue"]),
                     "type_of_sale":data_dictionary["transaction"]["subtype"],
-                    "nb_of_rooms":self._check_data(data_dictionary["property"]["roomCount"]),
-                    "area":self._check_data(data_dictionary["property"]["netHabitableSurface"]),
-                    "fully_equipped_kitchen":self._check_kitchen(data_dictionary["property"]["kitchen"]),
-                    "furnished":self._check_boolean(data_dictionary["transaction"]["sale"]["isFurnished"]),
-                    "open_fire":self._check_boolean(data_dictionary["property"]["fireplaceExists"]),
-                    "terrace":self._check_boolean(data_dictionary["property"]["hasTerrace"]),
-                    "terrace_area":self._check_terrace(data_dictionary["property"]),
-                    "garden":self._check_boolean(data_dictionary["property"]["hasGarden"]),
-                    "garden_area":self._check_garden(data_dictionary["property"]),
+                    "nb_of_rooms":self._clean_data(data_dictionary["property"]["roomCount"]),
+                    "area":self._clean_data(data_dictionary["property"]["netHabitableSurface"]),
+                    "fully_equipped_kitchen":self._get_fully_equiped_kitchen(data_dictionary["property"]["kitchen"]),
+                    "furnished":self._convert_to_boolean(data_dictionary["transaction"]["sale"]["isFurnished"]),
+                    "open_fire":self._convert_to_boolean(data_dictionary["property"]["fireplaceExists"]),
+                    "terrace":self._convert_to_boolean(data_dictionary["property"]["hasTerrace"]),
+                    "terrace_area":self._get_terrace_surface(data_dictionary["property"]),
+                    "garden":self._convert_to_boolean(data_dictionary["property"]["hasGarden"]),
+                    "garden_area":self._get_garden_surface(data_dictionary["property"]),
                     "surface_of_good":0,
-                    "nb_of_facades":self._check_data(data_dictionary["property"]["building"]["facadeCount"]),
-                    "swimming_pool":self._check_boolean(data_dictionary["property"]["hasSwimmingPool"]),
-                    "state_of_building":self._check_data(data_dictionary["property"]["building"]["condition"])
+                    "nb_of_facades":self._clean_data(data_dictionary["property"]["building"]["facadeCount"]),
+                    "swimming_pool":self._convert_to_boolean(data_dictionary["property"]["hasSwimmingPool"]),
+                    "state_of_building":self._clean_data(data_dictionary["property"]["building"]["condition"])
         }]
         
         return new_data
