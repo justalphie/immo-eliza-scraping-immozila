@@ -1,17 +1,10 @@
 import time
+import json
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expectedconditions as EC
-from bs4 import BeautifulSoup
-import requests
-import re
 
-def getwebsite():
-    teller = 0
-    url = ""
-    count = 0
-    links = []
-    weblinks=[]
+def get_properties_urls():
+    properties_urls=[]
     options = webdriver.FirefoxOptions()
     #options.addargument('--headless')
     driver = webdriver.Firefox(options=options)
@@ -19,33 +12,34 @@ def getwebsite():
     #driver.maximizewindow()
     time.sleep(5)
     shadow_host = driver.find_element(By.ID, 'usercentrics-root')
-    script = 'return arguments[0].shadowRoot'
-    shadow_root = driver.execute_script(script, shadow_host)
-    shadow_content = shadow_root.find_element(By.CSS_SELECTOR, 'button.sc-dcJsrY:nth-child(2)')
-    shadow_content.click()
+    shadow_root = driver.execute_script('return arguments[0].shadowRoot', shadow_host)
+    accept_button = shadow_root.find_element(By.CSS_SELECTOR, 'button.sc-dcJsrY:nth-child(2)')
+    accept_button.click()
     time.sleep(5)
-    findlist = driver.find_element(By.CSS_SELECTOR, "#searchBoxSubmitButton > span:nth-child(1)")
-    findlist.click()
-    url = driver.current_url
-    print(url)
-    r = requests.get(url)
-    print(url, r.status_code)
-    soup = BeautifulSoup(r.content, "html.parser")
-    for contentmain in soup.find_all("div",{"class":"container-main-content"}):
-        for a in contentmain.find_all("a", {"class":"cardtitle-link"}):
-                links.append(a)
-    for id, i in enumerate(links):
-        text = str(i)
-        pattern = r'href="([^"]*)"'
-        match = re.search(pattern, text)
-        if match:
-            result = match.group(1)
-            weblinks.append(result)
-            teller += 1
+
+    start_search_button = driver.find_element(By.CSS_SELECTOR, "#searchBoxSubmitButton > span:nth-child(1)")
+    start_search_button.click()
+
+    while len(properties_urls) < 500:
+
+        search_results = driver.find_element(By.ID, 'searchResults')
+        card_links = search_results.find_elements(By.CSS_SELECTOR, '.card__title-link')
+        for link in card_links:
+            properties_urls.append(link.get_attribute('href'))
+
+        next_page_buttons = driver.find_elements(By.CSS_SELECTOR, ".search-results__pagination .pagination__link--next")
+        if len(next_page_buttons) > 0:
+            next_page_buttons[0].click()
+            time.sleep(2)
+        else:
+            break
+
     driver.close()
-    print(weblinks)
-    return weblinks
+    return properties_urls
 
 
-if __name__ == "__main":
-    get_website()
+
+if __name__ == "__main__":
+    properties_urls= get_properties_urls()
+    with open("list_of_links.json", "w", encoding="utf-8") as f:
+        json.dump(properties_urls, f)
