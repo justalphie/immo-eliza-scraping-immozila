@@ -9,7 +9,7 @@ def main():
     webklinks = multiWeblinks()
     write_json(webklinks)
 
-    with open('./data/weblinksimmo.json', 'r') as f:
+    with open('./data/weblinksimmo_test.json', 'r') as f:
         data = json.load(f)
 
     columns = ["property_id", "locality_name","property_type","property_subtype","price", "type_of_sale","nb_of_rooms", "area",
