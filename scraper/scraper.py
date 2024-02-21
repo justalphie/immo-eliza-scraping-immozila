@@ -57,7 +57,7 @@ class PropertyScraper():
         """
         checks if property parameter is available or if property parameter is empty
         """
-        if data == "null" or data is None:
+        if data is None or data == "null":
             return None
         else:
             return data
@@ -67,11 +67,14 @@ class PropertyScraper():
         """
         checks if kitchen is fully equiped
         """
-        for keys in data:
-            if data[keys] == "null":
-                return 0
-            else:
-                return 1
+        if data is None or data == "null":
+            return None
+        else:
+            for keys in data:
+                if data[keys] == "null":
+                    return 0
+                else:
+                    return 1
 
 
     def _convert_to_boolean(self, data):
