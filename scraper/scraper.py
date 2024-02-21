@@ -99,7 +99,6 @@ class PropertyScraper():
             return None
 
 
-    # Checks if terrace is there and returns the surface area of it
     def _get_terrace_surface(self, data):
         """
         checks if terrace is there and if so returns surface area of it 
@@ -108,6 +107,14 @@ class PropertyScraper():
             return self._clean_data(data["terraceSurface"])
         else:
             return None
+
+
+    def _clean_building(self, data, value):
+            if data == "None" or data is None:
+                return None
+            else:        
+                facade_count_value = data[value]
+                return facade_count_value
 
 
     def _check_sale(self, dictionary):
@@ -142,9 +149,9 @@ class PropertyScraper():
                     "garden":self._convert_to_boolean(data_dictionary["property"]["hasGarden"]),
                     "garden_area":self._get_garden_surface(data_dictionary["property"]),
                     "surface_of_good":0,
-                    "nb_of_facades":self._clean_data(data_dictionary["property"]["building"]["facadeCount"]),
+                    "nb_of_facades":self._clean_building(data_dictionary["property"]["building"], "facadeCount"),
                     "swimming_pool":self._convert_to_boolean(data_dictionary["property"]["hasSwimmingPool"]),
-                    "state_of_building":self._clean_data(data_dictionary["property"]["building"]["condition"])
+                    "state_of_building":self._clean_building(data_dictionary["property"]["building"], "condition")
         }]
         
         return new_data
