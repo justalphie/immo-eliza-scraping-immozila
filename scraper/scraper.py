@@ -8,26 +8,33 @@ class PropertyScraper():
     """
     This class scrapes information from a single property url and stores it in a dictionary
     """
-    def __init__(self, url):
+    def __init__(self, url, session):
         self.url = url
-        
+        self.session = session
+
     def scrape_property_info(self):
         """
         This is the main method that scrapes information from a single property URL 
         and stores
         """
         property_dict = self._fetch_all_info_from_property()
-        scraped_data = self._check_sale(property_dict)
-        return scraped_data
+        if property_dict is not None:
+            scraped_data = self._check_sale(property_dict)
+            return scraped_data
+        else:
+            return None
     
 
     def _fetch_all_info_from_property(self) -> dict:
         """
         This private method scrapes information from a single property URL and stores it in a dictionary
         """
-        r = requests.get(self.url)
+        r = self.session.get(self.url)
         content = r.content
         
+        if r.status_code != 200:
+            return None
+
         # parse HTML content
         soup = BeautifulSoup(content, "html.parser")
         

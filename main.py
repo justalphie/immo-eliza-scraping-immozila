@@ -1,16 +1,23 @@
 import json
+import functools
 from scraper.scraper import PropertyScraper
 import pandas as pd
 import requests
 from scraper.threathimmolinks import multiWeblinks
 from scraper.threathimmolinks import write_json
+import concurrent.futures
+
+def process_url(url, session):
+    scrape_url = PropertyScraper(url, session)
+    dataframe_to_print = scrape_url.scrape_property_info()
+    return pd.DataFrame(dataframe_to_print) if dataframe_to_print is not None else None
 
 def main():
 
     weblinks = multiWeblinks()
     write_json(weblinks)
 
-    with open('./data/weblinksimmo_1500_test.json', 'r') as f:
+    with open('./data/weblinksimmo.json', 'r') as f:
         data = json.load(f)
 
     columns = ["property_id", "locality_name", "postal_code", "streetname", "housenumber", "latitude", "longitude", 
@@ -19,12 +26,20 @@ def main():
                     "surface", "surface_area_plot", "nb_of_facades", "swimming_pool", "state_of_building"]
     df = pd.DataFrame(columns=columns)
 
-    # Iterate through each element in the list
-    for url in data:
-        if requests.get(url).status_code == 200:
-            scrape_url = PropertyScraper(url)
-            dataframe_to_print = scrape_url.scrape_property_info()
-            df = pd.concat([df, pd.DataFrame(dataframe_to_print)])
+    with requests.Session() as session:
+    # Use ThreadPoolExecutor to parallelize the URL processing
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+        # Use functools.partial to pass the session as an argument
+            partial_process_url = functools.partial(process_url, session=session)
+
+        # Process each URL asynchronously
+            futures = [executor.submit(partial_process_url, url) for url in data]
+
+        # Collect the results as they become available
+            for future in concurrent.futures.as_completed(futures):
+                result_df = future.result()
+                if result_df is not None:
+                    df = pd.concat([df, result_df])
     print(df)    
     df.to_csv("./data/csvdump.csv", sep=',', index=False, encoding='utf-8')    
 
