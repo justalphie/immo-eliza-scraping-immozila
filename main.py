@@ -1,15 +1,16 @@
 import json
 from scraper.scraper import PropertyScraper
 import pandas as pd
+import requests
 from scraper.threathimmolinks import multiWeblinks
 from scraper.threathimmolinks import write_json
 
 def main():
 
-    webklinks = multiWeblinks()
-    write_json(webklinks)
+    weblinks = multiWeblinks()
+    write_json(weblinks)
 
-    with open('./data/weblinksimmo_test.json', 'r') as f:
+    with open('./data/weblinksimmo_1500_test.json', 'r') as f:
         data = json.load(f)
 
     columns = ["property_id", "locality_name", "postal_code", "streetname", "housenumber", "latitude", "longitude", 
@@ -20,9 +21,10 @@ def main():
 
     # Iterate through each element in the list
     for url in data:
-        scrape_url = PropertyScraper(url)
-        dataframe_to_print = scrape_url.scrape_property_info()
-        df = pd.concat([df, pd.DataFrame(dataframe_to_print)])
+        if requests.get(url).status_code == 200:
+            scrape_url = PropertyScraper(url)
+            dataframe_to_print = scrape_url.scrape_property_info()
+            df = pd.concat([df, pd.DataFrame(dataframe_to_print)])
     print(df)    
     df.to_csv("./data/csvdump.csv", sep=',', index=False, encoding='utf-8')    
 
