@@ -53,8 +53,7 @@ graph TD;
 The project involves discovering and saving the links to the locations of all properties in JSON files. Subsequently, each link undergoes thorough processing to extract the necessary information, which is then transformed into a DataFrame. Finally, the obtained information is written to a CSV file.
 
 ## Visuals
-<code>
-<ol>
+```
 Project Tree
 ├── data
 │   ├── cleaned
@@ -67,8 +66,7 @@ Project Tree
 ├── main.py
 ├── README.md
 └── requirements.txt
-</ol>
-</code>
+```
 
 
 ##  Contributors
