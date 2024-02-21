@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import json
+import pandas as pd
 
 
 class PropertyScraper():
@@ -12,14 +13,15 @@ class PropertyScraper():
         
     def scrape_property_info(self):
         """
-        This method scrapes information from a single property URL and stores it in a dictionary
+        This is the main method that scrapes information from a single property URL 
+        and stores
         """
         property_dict = self._fetch_all_info_from_property()
-        return self._create_column_dictionary(property_dict)
+        scraped_data = self._check_sale(property_dict)
+        return scraped_data
+    
 
-        
-
-    def _fetch_all_info_from_property(self):
+    def _fetch_all_info_from_property(self) -> dict:
         """
         This private method scrapes information from a single property URL and stores it in a dictionary
         """
@@ -35,8 +37,8 @@ class PropertyScraper():
 
         for tag in result_data:
             if 'window.classified' in str(tag.string):
-                window_classified_data = tag.string
-
+                window_classified_data = str(tag.string)
+        
         window_classified_data.strip()            
         window_classified_data = window_classified_data[window_classified_data.find("{"):window_classified_data.rfind("}")+1]
 
@@ -49,104 +51,96 @@ class PropertyScraper():
         # print(json_property_dict)
         
         return property_dict
-        
-
-
-    def _create_column_dictionary(self, property_dict):
-        """
-        This private will fetch only the needed columns from the property dictionary and store them in a temporary dictionary
-        """
-        
-        temp_columns_dict = {}
-
-        # property ID
-        #print("Property ID: " + str(house_dict['id']))
-        temp_columns_dict["property_ID"] = property_dict['id']
-
-        # locality name
-        #print("Locality name: " + str(house_dict['property']['location']['locality']))
-        temp_columns_dict["locality_name"] = property_dict['property']['location']['locality']
-
-        # Postal code
-        #print("Postal code: " + str(house_dict['property']['location']['postalCode']))
-        temp_columns_dict["postal_code"] = property_dict['property']['location']['postalCode']
-
-        # Price
-        # print("Price: " + str(house_dict['transaction']['sale']['price']))
-        #property_dict["price"] = house_dict['transaction']['sale']['price']
-
-        # Type of property (house or apartment)
-        # print("Type of property: " + str(house_dict['property']['type']))
-        temp_columns_dict["property_type"] = property_dict['property']['type']
-
-        # Subtype of property (bungalow, chalet, mansion, ...)
-        #print("Subtype of property: " + str(house_dict['property']['subtype']))
-        temp_columns_dict["property_subtype"] = property_dict['property']['subtype']
-
-        # Type of sale (note: exclude life sales)
-        #print("Type of Sale: " + str(house_dict['transaction']['type']))
-        temp_columns_dict["sale_type"] = property_dict['transaction']['type']
-
-        # Number of rooms
-        #print("Number of rooms: " + str(house_dict['property']['roomCount']))
-        temp_columns_dict["number_of_rooms"] = property_dict['property']['roomCount']
-
-        # # Living area (area in m²)
-        # #print("Living area (m2): " + str(house_dict['property']['livingroom']['surface']))
-        # if house_dict['property']['livingRoom']['surface']:
-        #     property_dict["living_area"] = house_dict['property']['livingRoom']['surface']
-        # else:
-        #     property_dict["living_area"] = 0
-
-        # Equipped kitchen (0/1)
-        #print("Equipped kitchen: " + str(house_dict['property']['kitchen']['type']))
-        # if property_dict['property']['kitchen']['type'] is not None:
-        #     columns_dict["equipped_kitchen"] = property_dict['property']['kitchen']['type']
-        # else:
-        #     columns_dict["equipped_kitchen"] = 0
-
-        # Furnished (0/1)
-        #print("Is furnished: " + str(house_dict['transaction']['sale']['isFurnished']))
-        if property_dict['transaction']['sale']['isFurnished'] is not None:
-            temp_columns_dict["furnished"] = property_dict['transaction']['sale']['isFurnished']
-        else:
-            temp_columns_dict["furnished"] = 0
-
-        # Open fire (0/1)
-        #print("Open fire: " + str(house_dict['property']['fireplaceExists']))
-        if property_dict['property']['fireplaceExists'] is not None:
-            temp_columns_dict["open_fire"] = property_dict['property']['fireplaceExists']
-        else:
-            temp_columns_dict["open_fire"] = 0
-
-        # Terrace (area in m² or null if no terrace)
-        #print("Terrace (m2): " + str(house_dict['property']['terraceSurface']))
-        if property_dict['property']['terraceSurface'] is not None:
-            temp_columns_dict["terrace_area"] = property_dict['property']['terraceSurface']
-        else:
-            temp_columns_dict["terrace_area"] = 0
-
-        # Garden (area in m² or null if no garden)
-        # print("Garden (m2): " + str(property_dict['property']['gardenSurface']))
-        if property_dict['property']['gardenSurface'] is not None:
-            temp_columns_dict["garden_area"] = property_dict['property']['gardenSurface']
-        else:
-            temp_columns_dict["garden_area"] = 0
-
-        # Surface of good
-        #print("Surface of good (m2): " + str(house_dict['property']['land']['surface']))
-
-        # # Number of facades
-        # #print("Number of facades: " + str(house_dict['property']['building']['facadeCount']))
-        # columns_dict["facade_count"] = property_dict['property']['building']['facadeCount']
-
-        # Swimming pool (0/1)
-        # print("Garden (m2): " + str(house_dict[
-
-        # # State of building (new, to be renovated, ...)
-        # #print("State of building: " + str(house_dict['property']['building']['condition']))
-        # columns_dict["state_of_building"] = property_dict['property']['building']['condition']
-
-        #print(temp_columns_dict)
-        return temp_columns_dict
+            
     
+    def _clean_data(self, data):
+        """
+        checks if property parameter is available or if property parameter is empty
+        """
+        if data is None or data == "null":
+            return None
+        else:
+            return data
+
+
+    def _get_fully_equiped_kitchen(self, data):
+        """
+        checks if kitchen is fully equiped
+        """
+        if data is None or data == "null":
+            return None
+        else:
+            for keys in data:
+                if data[keys] == "null":
+                    return 0
+                else:
+                    return 1
+
+
+    def _convert_to_boolean(self, data):
+        """
+        changes boolean into numeric values
+        """
+        if data is None or data == "null":
+            return None
+        elif data == True:
+            return 1
+        else:
+            return 0
+
+
+    def _get_garden_surface(self, data):
+        """
+        checks if garden is there and return surface if possible
+        """
+        if data["hasGarden"] == True:
+            return self._clean_data(data["gardenSurface"])
+        else:
+            return None
+
+
+    # Checks if terrace is there and returns the surface area of it
+    def _get_terrace_surface(self, data):
+        """
+        checks if terrace is there and if so returns surface area of it 
+        """
+        if data["hasTerrace"] == True:
+            return self._clean_data(data["terraceSurface"])
+        else:
+            return None
+
+
+    def _check_sale(self, dictionary):
+        """
+        checks if property is for sale
+        """
+        if dictionary["transaction"]["type"] == "FOR_SALE":
+            return self._data_to_insert_in_dataframe(dictionary)
+        
+    def _data_to_insert_in_dataframe(self, data_dictionary):
+        """
+        building a dictionary with all the scraped data
+        """
+        new_data = [{ "property_id": self._clean_data(data_dictionary["id"]),
+                    "locality_name":self._clean_data(data_dictionary["property"]["location"]["locality"]),
+                    "postal_code":self._clean_data(data_dictionary["property"]["location"]["postalCode"]),
+                    "property_type":self._clean_data(data_dictionary["property"]["type"]),
+                    "property_subtype":self._clean_data(data_dictionary["property"]["subtype"]),
+                    "price":self._clean_data(data_dictionary["price"]["mainValue"]),
+                    "type_of_sale":data_dictionary["transaction"]["subtype"],
+                    "nb_of_rooms":self._clean_data(data_dictionary["property"]["roomCount"]),
+                    "area":self._clean_data(data_dictionary["property"]["netHabitableSurface"]),
+                    "fully_equipped_kitchen":self._get_fully_equiped_kitchen(data_dictionary["property"]["kitchen"]),
+                    "furnished":self._convert_to_boolean(data_dictionary["transaction"]["sale"]["isFurnished"]),
+                    "open_fire":self._convert_to_boolean(data_dictionary["property"]["fireplaceExists"]),
+                    "terrace":self._convert_to_boolean(data_dictionary["property"]["hasTerrace"]),
+                    "terrace_area":self._get_terrace_surface(data_dictionary["property"]),
+                    "garden":self._convert_to_boolean(data_dictionary["property"]["hasGarden"]),
+                    "garden_area":self._get_garden_surface(data_dictionary["property"]),
+                    "surface_of_good":0,
+                    "nb_of_facades":self._clean_data(data_dictionary["property"]["building"]["facadeCount"]),
+                    "swimming_pool":self._convert_to_boolean(data_dictionary["property"]["hasSwimmingPool"]),
+                    "state_of_building":self._clean_data(data_dictionary["property"]["building"]["condition"])
+        }]
+        
+        return new_data
