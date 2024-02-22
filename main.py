@@ -19,7 +19,7 @@ def main():
     weblinks = multiWeblinks()
     write_json(weblinks)
 
-    with open('./data/weblinksimmo.json', 'r') as f:
+    with open('./data/raw/raw_weblinksimmo.json', 'r') as f:
         data = json.load(f)
 
     columns = ["property_id", "locality_name", "postal_code", "streetname", "housenumber", "latitude", "longitude", 
@@ -43,7 +43,7 @@ def main():
                 if result_df is not None:
                     df = pd.concat([df, result_df])
     print(df)    
-    df.to_csv("./data/csvdump.csv", sep=',', index=False, encoding='utf-8')    
+    df.to_csv("./data/cleaned/clean.csv", sep=',', index=False, encoding='utf-8')    
 
 if __name__ == "__main__":
     start_time = time.time()
