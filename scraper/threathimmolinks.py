@@ -18,6 +18,12 @@ def immo_pagelinks(n):
 
 
 def immo_weblinks(pages_url):
+    """
+    Extracts unique web links from a specified webpage and returns a list of links.
+
+    param:
+        pages_url (str): The URL of the webpage to extract links from.
+    """
     weblinks=[]
     seen_links = set()
 
@@ -37,11 +43,23 @@ def immo_weblinks(pages_url):
 
 
 def write_json(weblinks):
+    """
+        Writes a list of weblinks to a json file
+
+        param:
+            list of links
+    """
     with open("./data/weblinksimmo.json", 'w') as output_file:
         print(json.dumps(weblinks, indent=2), file=output_file)
 
 
 def write_json_houses(weblinks):
+    """
+        Writes a list of weblinks to a json file if huis, villa or herenhuis is in the linkname
+
+        param:
+            list: A list containing all unique web links extracted from multiple pages.
+    """
     filtered_links = [link for link in weblinks if "huis" in link.lower() or "villa" in link.lower() or "herenhuis" in link.lower()]
 
     with open("./data/weblinksimmohouse.json", 'w') as output_file:
@@ -49,6 +67,12 @@ def write_json_houses(weblinks):
 
 
 def write_json_appartment(weblinks):
+    """
+        Writes a list of weblinks to a json file if appartement or studio is in the linkname
+
+        param:
+            list: A list containing all unique web links extracted from multiple pages.
+    """
     filtered_links = [link for link in weblinks if "appartement" in link.lower() or "studio" in link.lower()]
 
     with open("./data/weblinksimmoappartment.json", 'w') as output_file:
@@ -56,6 +80,12 @@ def write_json_appartment(weblinks):
 
 
 def multiWeblinks():
+    """
+    Extracts web links from multiple pages concurrently using threading.
+
+    Returns:
+        list: A list containing all unique web links extracted from multiple pages.
+    """
     page_links = immo_pagelinks(1)
     
     with concurrent.futures.ThreadPoolExecutor() as executor:
