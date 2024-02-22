@@ -1,8 +1,7 @@
-import requests
 from bs4 import BeautifulSoup
-import json
-import asyncio
 import concurrent
+import json
+import requests
 
 
 def immo_pagelinks(n):

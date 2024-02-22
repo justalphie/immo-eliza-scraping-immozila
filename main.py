@@ -1,12 +1,13 @@
+import concurrent.futures
 import json
 import functools
 from scraper.scraper import PropertyScraper
 import pandas as pd
 import requests
+import time
+
 from scraper.threathimmolinks import multiWeblinks
 from scraper.threathimmolinks import write_json
-import concurrent.futures
-import time
 
 def process_url(url, session):
     scrape_url = PropertyScraper(url, session)
@@ -40,7 +41,7 @@ def main():
             for future in concurrent.futures.as_completed(futures):
                 result_df = future.result()
                 if result_df is not None:
-                    df = pd.concat([df, result_df])
+                    df = pl.concat([df, result_df])
     print(df)    
     df.to_csv("./data/csvdump.csv", sep=',', index=False, encoding='utf-8')    
 
