@@ -3,7 +3,10 @@ from haversine import Unit
 import pandas as pd
 import requests
 import math
+from requests import Session
+from tqdm import tqdm
 
+session = Session()
 
 def get_shopping(lat, lon):
 
@@ -32,31 +35,44 @@ def get_shopping(lat, lon):
         node[shop]{lat-0.010,lon-0.015,lat+0.010,lon+0.015};
         out center;"""
         #print(query)
-        response = requests.post(
+        response = session.post(
             "https://overpass-api.de/api/interpreter",
             headers=headers,
             data = {"data": query}
         ).json()
-        print(response)
+        #print(response)
         how_many_shops = 0
 
         for element in response["elements"]:
             if element["tags"]['shop']:
-                how_many_shops +=1
+                how_many_shops += 1
 
         return pd.Series(
             [how_many_shops], 
             index=["how_many_shops"])
-    except:
+    except SystemExit:
+        raise SystemExit()
+    except KeyboardInterrupt:
+        raise KeyboardInterrupt()
+    except BaseException as e:
+        print(e)
         return pd.Series(
             [None], 
             index=["how_many_shops"])
     
-df = pd.read_csv("csvdump_with_schools.csv")
+df = pd.read_csv("csvdump_18k.csv")
 
-new_columns = df.apply(lambda row: get_shopping(row["latitude"], row["longitude"]), axis=1)
+batch_size = 200
+df_new_columns = None
+for i in tqdm(range(0, df.size, batch_size)):
+    new_columns = df.iloc[i:min(df.size,i+batch_size)].apply(lambda row: get_shopping(row["latitude"], row["longitude"]), axis=1)
+    if df_new_columns is None:
+        df_new_columns = new_columns
+    else:
+        df_new_columns = pd.concat([df_new_columns, new_columns], axis=0)
+    df_new_columns.to_csv("csvdump_just_shops_data.csv")
+
 df = pd.concat([df, new_columns], axis=1)
-
 
 # Print the updated dataframe
 #print(df)
