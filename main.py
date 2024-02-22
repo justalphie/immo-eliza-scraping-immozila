@@ -41,7 +41,7 @@ def main():
             for future in concurrent.futures.as_completed(futures):
                 result_df = future.result()
                 if result_df is not None:
-                    df = pl.concat([df, result_df])
+                    df = pd.concat([df, result_df])
     print(df)    
     df.to_csv("./data/csvdump.csv", sep=',', index=False, encoding='utf-8')    
 
