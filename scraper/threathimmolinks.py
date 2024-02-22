@@ -56,7 +56,7 @@ def write_json_appartment(weblinks):
 
 
 def multiWeblinks():
-    page_links = immo_pagelinks(1)
+    page_links = immo_pagelinks(170)
     
     with concurrent.futures.ThreadPoolExecutor() as executor:
         results = list(executor.map(immo_weblinks, page_links))

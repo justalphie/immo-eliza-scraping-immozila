@@ -1,4 +1,3 @@
-import requests
 from bs4 import BeautifulSoup
 import json
 import pandas as pd
@@ -131,6 +130,13 @@ class PropertyScraper():
         if dictionary["transaction"]["type"] == "FOR_SALE":
             return self._data_to_insert_in_dataframe(dictionary)
         
+    def _get_surface_of_good(self, data):
+        if data["property"]["land"] == None:
+            return None
+        else:
+            return self._clean_data(data["property"]["land"]["surface"])
+
+        
     def _data_to_insert_in_dataframe(self, data_dictionary):
         """
         building a dictionary with all the scraped data
@@ -155,7 +161,7 @@ class PropertyScraper():
                     "terrace_area":self._get_terrace_surface(data_dictionary["property"]),
                     "garden":self._convert_to_boolean(data_dictionary["property"]["hasGarden"]),
                     "garden_area":self._get_garden_surface(data_dictionary["property"]),
-                    "surface_of_good":0,
+                    "surface_of_good":self._get_surface_of_good(data_dictionary),
                     "nb_of_facades":self._clean_building(data_dictionary["property"]["building"], "facadeCount"),
                     "swimming_pool":self._convert_to_boolean(data_dictionary["property"]["hasSwimmingPool"]),
                     "state_of_building":self._clean_building(data_dictionary["property"]["building"], "condition")

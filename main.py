@@ -6,6 +6,7 @@ import requests
 from scraper.threathimmolinks import multiWeblinks
 from scraper.threathimmolinks import write_json
 import concurrent.futures
+import time
 
 def process_url(url, session):
     scrape_url = PropertyScraper(url, session)
@@ -44,4 +45,9 @@ def main():
     df.to_csv("./data/csvdump.csv", sep=',', index=False, encoding='utf-8')    
 
 if __name__ == "__main__":
+    start_time = time.time()
     main()
+    end_time = time.time()
+
+    total_time = end_time - start_time
+    print(total_time)
