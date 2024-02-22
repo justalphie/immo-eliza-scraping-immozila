@@ -85,7 +85,7 @@ def multiWeblinks():
     Returns:
         list: A list containing all unique web links extracted from multiple pages.
     """
-    page_links = immo_pagelinks(1)
+    page_links = immo_pagelinks(300)
     
     with concurrent.futures.ThreadPoolExecutor() as executor:
         results = list(executor.map(immo_weblinks, page_links))
