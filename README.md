@@ -1,7 +1,7 @@
-# immozilla
+# Immozilla
 [![forthebadge made-with-python](https://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 
-##  Description
+## 📖 Description
 This Python project employs web scraping techniques to compile a dataset of real estate properties in Belgium. Specifically, we utilized Immoweb to gather information on 10,000 houses and apartments available for sale across the country.
 
 The outcome of this project provides us with the following headers in our files:
@@ -26,7 +26,7 @@ The outcome of this project provides us with the following headers in our files:
 * State of building (new, to be renovated, ...)
 
 
-##  Installation
+## 🛠 Installation
 
 * clone the repo
 * Install all the libraries in requirements.txt
@@ -35,9 +35,9 @@ The outcome of this project provides us with the following headers in our files:
 $ python3 main.py
 ```
 
-* everything wil be stored in ./data/csvdump.csv. 
+* everything wil be stored in ./data/cleaned/clean.csv. 
 
-##  Workflow
+## 👾 Workflow
 
 ### main
 ```mermaid
@@ -48,11 +48,11 @@ graph TD;
     E-->F["to_csv() "];
 ```
 
-##  Usage
+## 🚀 Usage
 
 The project involves discovering and saving the links to the locations of all properties in JSON files. Subsequently, each link undergoes thorough processing to extract the necessary information, which is then transformed into a DataFrame. Finally, the obtained information is written to a CSV file.
 
-## Visuals
+## 🤖 Project File structure
 ```
 Project Tree
 ├── data
@@ -69,12 +69,12 @@ Project Tree
 ```
 
 
-##  Contributors
+## 🔍 Contributors
 - [Nathalie Nachtergaele](https://github.com/NathNacht)
 - [Jens Dedeyne](https://github.com/DedeyJ)
 - [Alfiya Khabibullina](https://github.com/justalphie)
 - [Sem Deleersnijder](https://github.com/semdeleer)
 
-##  Timeline
+## 📜 Timeline
 
 This project was created in 5 days.
