@@ -130,7 +130,7 @@ class PropertyScraper():
             return self._data_to_insert_in_dataframe(dictionary)
         
     def _get_surface_of_good(self, data):
-        if data["property"]["land"] == None:
+        if data["property"]["land"] == None or data["property"]["land"] is None:
             return None
         else:
             return self._clean_data(data["property"]["land"]["surface"])
@@ -153,6 +153,7 @@ class PropertyScraper():
                     "type_of_sale":data_dictionary["transaction"]["subtype"],
                     "nb_of_rooms":self._clean_data(data_dictionary["property"]["roomCount"]),
                     "area":self._clean_data(data_dictionary["property"]["netHabitableSurface"]),
+                    "kitchen_type":self._clean_building(data_dictionary["property"]["kitchen"], "type"),
                     "fully_equipped_kitchen":self._get_fully_equiped_kitchen(data_dictionary["property"]["kitchen"]),
                     "furnished":self._convert_to_boolean(data_dictionary["transaction"]["sale"]["isFurnished"]),
                     "open_fire":self._convert_to_boolean(data_dictionary["property"]["fireplaceExists"]),

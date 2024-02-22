@@ -85,7 +85,8 @@ def multiWeblinks():
     Returns:
         list: A list containing all unique web links extracted from multiple pages.
     """
-    page_links = immo_pagelinks(300)
+    input_amount = int(input("How many pages do you want to scrape?: "))
+    page_links = immo_pagelinks(input_amount)
     
     with concurrent.futures.ThreadPoolExecutor() as executor:
         results = list(executor.map(immo_weblinks, page_links))
