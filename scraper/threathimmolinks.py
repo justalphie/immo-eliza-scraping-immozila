@@ -48,7 +48,7 @@ def write_json(weblinks):
         param:
             list of links
     """
-    with open("./data/raw/weblinksimmo.json", 'w') as output_file:
+    with open("./data/raw/raw_weblinksimmo.json", 'w') as output_file:
         print(json.dumps(weblinks, indent=2), file=output_file)
 
 

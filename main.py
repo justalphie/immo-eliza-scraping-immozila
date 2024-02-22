@@ -25,7 +25,7 @@ def main():
     columns = ["property_id", "locality_name", "postal_code", "streetname", "housenumber", "latitude", "longitude", 
                     "property_type", "property_subtype", "price", "type_of_sale", "nb_of_rooms", "area", "kitchen_type",
                     "fully_equipped_kitchen", "furnished", "open_fire","terrace", "terrace_area","garden", "garden_area",
-                    "surface", "surface_area_plot", "nb_of_facades", "swimming_pool", "state_of_building"]
+                    "surface_of_good", "nb_of_facades", "swimming_pool", "state_of_building"]
     df = pd.DataFrame(columns=columns)
 
     with requests.Session() as session:
