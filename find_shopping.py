@@ -72,9 +72,8 @@ for i in tqdm(range(0, df.size, batch_size)):
         df_new_columns = pd.concat([df_new_columns, new_columns], axis=0)
     df_new_columns.to_csv("csvdump_just_shops_data.csv")
 
-df = pd.concat([df, new_columns], axis=1)
+df_new_columns = df_new_columns[["how_many_shops"]]
 
-# Print the updated dataframe
-#print(df)
-
+# concat the new columns with the existing ones
+df = pd.concat([df, df_new_columns], axis=1)
 df.to_csv("csvdump_with_shops.csv")
