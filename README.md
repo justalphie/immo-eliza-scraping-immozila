@@ -1,52 +1,78 @@
 # Immozilla
 [![forthebadge made-with-python](https://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
+![pandas](https://img.shields.io/badge/Pandas-2C2D72?style=for-the-badge&logo=pandas&logoColor=white)
+![vsCode](https://img.shields.io/badge/VSCode-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white
+)
+
 
 ## 📖 Description
-This Python project employs web scraping techniques to compile a dataset of real estate properties in Belgium. Specifically, we utilized Immoweb to gather information on 10,000 houses and apartments available for sale across the country.
+This Python project employs web scraping techniques to compile a dataset of real estate properties in Belgium. Specifically, we utilized Immoweb to gather information on +10,000 houses and apartments available for sale across the country.
 
 The outcome of this project provides us with the following headers in our files:
 
-* Property ID
-* Locality name
-* Postal code
-* Price
-* Type of property (house or apartment)
-* Subtype of property (bungalow, chalet, mansion, ...)
-* Type of sale (note: exclude life sales)
-* Number of rooms
-* Living area (area in m²)
-* Equipped kitchen (0/1)
-* Furnished (0/1)
-* Open fire (0/1)
-* Terrace (area in m² or null if no terrace)
-* Garden (area in m² or null if no garden)
-* Surface of good
-* Number of facades
-* Swimming pool (0/1)
-* State of building (new, to be renovated, ...)
+* property_id
+* locality_name
+* postal_code
+* street_name
+* house_number
+* latitude
+* longitude
+* property_type (house or apartment)
+* property_subtype (bungalow, chalet, mansion, ...)
+* price
+* type_of_sale (note: exclude life sales)
+* number_of_rooms (Number of rooms)
+* living_area (Living area (area in m²))
+* kitchen_type
+* fully_equipped_kitchen (0/1)
+* furnished (0/1)
+* open_fire (0/1)
+* terrace
+* terrace_area (area in m² or null if no terrace)
+* garden
+* garden_area (area in m² or null if no garden)
+* surface_of_good
+* number_of_facades
+* swimming_pool (0/1)
+* state_of_building (new, to be renovated, ...)
 
 
 ## 🛠 Installation
 
 * clone the repo
-* Install all the libraries in requirements.txt
+```bash
+git clone git@github.com:NathNacht/immo-eliza-scraping-immozila.git
+```
 
+* Install all the libraries in requirements.txt
+```bash
+pip install -r requirements.txt
+```
+
+* Run the script
 ```bash
 $ python3 main.py
 ```
 
-* everything wil be stored in ./data/cleaned/clean.csv. 
+You will be asked to specify the number of pages to be scraped. Fill in a number.
+
+* The output will be stored in ./data/cleaned/clean.csv
 
 ## 👾 Workflow
 
 ### main
 ```mermaid
 graph TD;
-    A["multiWeblinks()"]-->B[Will be stored in weblinks];
-    B-->C["PropertyScraper(url)"]-->D[Will be stored in scrape_url];
-    D-->E["scrape_url.scrape_property_info()"];
-    E-->F["to_csv() "];
+    A["multiWeblinks()"]-->B[Store in weblinks] 
+    B--> C["write_json()"];
+    C-->D["PropertyScraper(url)"]-->E[Will be stored in scrape_url];
+    E-->F["scrape_url.scrape_property_info()"];
+    F-->G[Check if house is FOR SALE] 
+    G-->H[Fill up dictionary with data];
+    H-->I[write to pandas dataframe];
+    I-->J["to_csv()"];
 ```
+
 
 ## 🚀 Usage
 
@@ -54,7 +80,6 @@ The project involves discovering and saving the links to the locations of all pr
 
 ## 🤖 Project File structure
 ```
-Project Tree
 ├── data
 │   ├── cleaned
 │   └── raw
