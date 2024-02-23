@@ -26,7 +26,7 @@ def main():
     
 
     weblinks = multiWeblinks()
-    write_json(weblinks)
+    write_json(list(set(weblinks)))
 
     with open('./data/raw/raw_weblinksimmo.json', 'r') as f:
         data = json.load(f)
