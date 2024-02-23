@@ -10,11 +10,20 @@ from scraper.threathimmolinks import multiWeblinks
 from scraper.threathimmolinks import write_json
 
 def process_url(url, session):
+    """
+    Processes a URL and returns a dataframe with the scraped data.
+
+    :param url: url to scrape
+    :param session: session to use
+    :return: dataframe with scraped data
+    """
     scrape_url = PropertyScraper(url, session)
     dataframe_to_print = scrape_url.scrape_property_info()
+    
     return pd.DataFrame(dataframe_to_print) if dataframe_to_print is not None else None
 
 def main():
+    
 
     weblinks = multiWeblinks()
     write_json(weblinks)
