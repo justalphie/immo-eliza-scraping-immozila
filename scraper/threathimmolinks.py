@@ -7,12 +7,17 @@ import requests
 def immo_pagelinks(n):
     """
     Starting from a root_url fetches the immoweb links for n pages
+
+    :param n: number of pages
+    :return: list of urls
     """
     immopagelinks=[]
     root_url = "https://www.immoweb.be/nl/zoeken/huis/te-koop?countries=BE&page="
+    #root_url = "https://www.immoweb.be/nl/zoeken/huis-en-appartement/te-koop?countries=BE&page="
 
     for number in range(1, n+1):
         immopagelinks.append(f"{root_url}{number}&orderBy=relevance")
+
     return immopagelinks
 
 
@@ -20,8 +25,8 @@ def immo_weblinks(pages_url):
     """
     Extracts unique web links from a specified webpage and returns a list of links.
 
-    param:
-        pages_url (str): The URL of the webpage to extract links from.
+    :param pages_url (str): The URL of the webpage to extract links from.
+    :return: A list of unique web links extracted from the specified webpage.
     """
     weblinks=[]
     seen_links = set()
@@ -43,21 +48,19 @@ def immo_weblinks(pages_url):
 
 def write_json(weblinks):
     """
-        Writes a list of weblinks to a json file
+    Writes a list of weblinks to a json file
 
-        param:
-            list of links
+    :param weblinks (list): list of links
     """
-    with open("./data/raw/weblinksimmo.json", 'w') as output_file:
+    with open("./data/raw/raw_weblinksimmo.json", 'w') as output_file:
         print(json.dumps(weblinks, indent=2), file=output_file)
 
 
 def write_json_houses(weblinks):
     """
-        Writes a list of weblinks to a json file if huis, villa or herenhuis is in the linkname
+    Writes a list of weblinks to a json file if huis, villa or herenhuis is in the linkname
 
-        param:
-            list: A list containing all unique web links extracted from multiple pages.
+    :param weblinks (list): A list containing all unique web links extracted from multiple pages.
     """
     filtered_links = [link for link in weblinks if "huis" in link.lower() or "villa" in link.lower() or "herenhuis" in link.lower()]
 
@@ -67,10 +70,9 @@ def write_json_houses(weblinks):
 
 def write_json_appartment(weblinks):
     """
-        Writes a list of weblinks to a json file if appartement or studio is in the linkname
+    Writes a list of weblinks to a json file if appartement or studio is in the linkname
 
-        param:
-            list: A list containing all unique web links extracted from multiple pages.
+    :param weblinks (list): A list containing all unique web links extracted from multiple pages.
     """
     filtered_links = [link for link in weblinks if "appartement" in link.lower() or "studio" in link.lower()]
 
@@ -82,8 +84,7 @@ def multiWeblinks():
     """
     Extracts web links from multiple pages concurrently using threading.
 
-    Returns:
-        list: A list containing all unique web links extracted from multiple pages.
+    :returns: A list containing all unique web links extracted from multiple pages.
     """
     input_amount = int(input("How many pages do you want to scrape?: "))
     page_links = immo_pagelinks(input_amount)

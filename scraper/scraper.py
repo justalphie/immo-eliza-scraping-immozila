@@ -12,8 +12,10 @@ class PropertyScraper():
 
     def scrape_property_info(self):
         """
-        This is the main method that scrapes information from a single property URL 
-        and stores
+        This is the main method that scrapes information from a single property URL, 
+        stores it in a dictionary that is then used to fetch only the needed columns.
+
+        :return: dictionary with needed columns
         """
         property_dict = self._fetch_all_info_from_property()
         if property_dict is not None:
@@ -25,7 +27,10 @@ class PropertyScraper():
 
     def _fetch_all_info_from_property(self) -> dict:
         """
-        This private method scrapes information from a single property URL and stores it in a dictionary
+        This private method scrapes information from a single property URL and stores it in a dictionary.
+        A check is included to see if the URL is still responding.
+
+        :return: dictionary with all scraped information
         """
         r = self.session.get(self.url)
         content = r.content
@@ -60,7 +65,10 @@ class PropertyScraper():
     
     def _clean_data(self, data):
         """
-        checks if property parameter is available or if property parameter is empty
+        This private method checks if a property parameter is available or empty
+
+        :param data: property parameter
+        :return: value of the property parameter
         """
         if data is None or data == "null":
             return None
@@ -70,7 +78,11 @@ class PropertyScraper():
 
     def _get_fully_equiped_kitchen(self, data):
         """
-        checks if kitchen is fully equiped
+        This private method checks if the kitchen of the property is fully equiped
+        Logic of this method is if all of the kitchen parameters are null a 0 is returned, else 1
+
+        :param data: property parameter
+        :return: 1 if fully equiped, 0 if not
         """
         if data is None or data == "null":
             return None
@@ -84,7 +96,10 @@ class PropertyScraper():
 
     def _convert_to_boolean(self, data):
         """
-        changes boolean into numeric values
+        This private method changes boolean (True/False) into numeric values (0/1)
+
+        :param data: property parameter
+        :return: 1 if True, 0 if False
         """
         if data is None or data == "null":
             return None
@@ -96,7 +111,10 @@ class PropertyScraper():
 
     def _get_garden_surface(self, data):
         """
-        checks if garden is there and return surface if possible
+        This private method checks if the garden parameter is there and return the garden surface if possible
+
+        :param data: property parameter
+        :return: garden surface
         """
         if data["hasGarden"] == True:
             return self._clean_data(data["gardenSurface"])
@@ -106,7 +124,10 @@ class PropertyScraper():
 
     def _get_terrace_surface(self, data):
         """
-        checks if terrace is there and if so returns surface area of it 
+        This private method checks if a terrace parameter is there and if so it returns the terrace surface area of it 
+
+        :param data: property parameter
+        :return: surface of the terrace
         """
         if data["hasTerrace"] == True:
             return self._clean_data(data["terraceSurface"])
@@ -115,44 +136,65 @@ class PropertyScraper():
 
 
     def _clean_building(self, data, value):
-            if data == "None" or data is None:
-                return None
-            else:        
-                facade_count_value = data[value]
-                return facade_count_value
-
-
-    def _check_sale(self, dictionary):
         """
-        checks if property is for sale
+        This private method checks for a few property parameters if they are available or empty
+
+        :param data: property parameter
+        :param value: property parameter
+        :return: value of the property parameter
         """
-        if dictionary["transaction"]["type"] == "FOR_SALE":
-            return self._data_to_insert_in_dataframe(dictionary)
+        if data == "None" or data is None:
+            return None
+        else:        
+            type_value = data[value]
+            return type_value
+
         
     def _get_surface_of_good(self, data):
+        """
+        This private method checks if a surface of good parameter is available and if so returns the value of it
+
+        :param data: property parameter
+        :return: surface of good
+        """
         if data["property"]["land"] == None or data["property"]["land"] is None:
             return None
         else:
             return self._clean_data(data["property"]["land"]["surface"])
 
+
+    def _check_sale(self, dictionary):
+        """
+        This private method checks if property is for sale.
+
+        :param dictionary: the dictionary that is build up with the scraped data of one URL
+        :return: dictionary with needed columns which is created in _data_to_insert_in_dataframe
+        """
+        if dictionary["transaction"]["type"] == "FOR_SALE":
+            return self._data_to_insert_in_dataframe(dictionary)
+        
         
     def _data_to_insert_in_dataframe(self, data_dictionary):
         """
-        building a dictionary with all the scraped data
+        This private method is used to build a dictionary with only the needed colums. Methods are used
+        to implement certain logic when filling up the dictionary.
+
+        :param data_dictionary: the dictionary that is build up with the scraped data of one URL
+        :return: dictionary with needed columns
         """
         new_data = [{ "property_id": self._clean_data(data_dictionary["id"]),
                     "locality_name":self._clean_data(data_dictionary["property"]["location"]["locality"]),
                     "postal_code":self._clean_data(data_dictionary["property"]["location"]["postalCode"]),
-                    "streetname":self._clean_data(data_dictionary["property"]["location"]["street"]),
-                    "housenumber":self._clean_data(data_dictionary["property"]["location"]["number"]),
+                    "street_name":self._clean_data(data_dictionary["property"]["location"]["street"]),
+                    "house_number":self._clean_data(data_dictionary["property"]["location"]["number"]),
                     "latitude":self._clean_data(data_dictionary["property"]["location"]["latitude"]),
                     "longitude":self._clean_data(data_dictionary["property"]["location"]["longitude"]),
                     "property_type":self._clean_data(data_dictionary["property"]["type"]),
                     "property_subtype":self._clean_data(data_dictionary["property"]["subtype"]),
                     "price":self._clean_data(data_dictionary["price"]["mainValue"]),
                     "type_of_sale":data_dictionary["transaction"]["subtype"],
-                    "nb_of_rooms":self._clean_data(data_dictionary["property"]["roomCount"]),
-                    "area":self._clean_data(data_dictionary["property"]["netHabitableSurface"]),
+                    "number_of_rooms":self._clean_data(data_dictionary["property"]["roomCount"]),
+                    "living_area":self._clean_data(data_dictionary["property"]["netHabitableSurface"]),
                     "kitchen_type":self._clean_building(data_dictionary["property"]["kitchen"], "type"),
                     "fully_equipped_kitchen":self._get_fully_equiped_kitchen(data_dictionary["property"]["kitchen"]),
                     "furnished":self._convert_to_boolean(data_dictionary["transaction"]["sale"]["isFurnished"]),
@@ -162,7 +204,7 @@ class PropertyScraper():
                     "garden":self._convert_to_boolean(data_dictionary["property"]["hasGarden"]),
                     "garden_area":self._get_garden_surface(data_dictionary["property"]),
                     "surface_of_good":self._get_surface_of_good(data_dictionary),
-                    "nb_of_facades":self._clean_building(data_dictionary["property"]["building"], "facadeCount"),
+                    "number_of_facades":self._clean_building(data_dictionary["property"]["building"], "facadeCount"),
                     "swimming_pool":self._convert_to_boolean(data_dictionary["property"]["hasSwimmingPool"]),
                     "state_of_building":self._clean_building(data_dictionary["property"]["building"], "condition")
         }]

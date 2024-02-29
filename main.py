@@ -10,22 +10,31 @@ from scraper.threathimmolinks import multiWeblinks
 from scraper.threathimmolinks import write_json
 
 def process_url(url, session):
+    """
+    Processes a URL and returns a dataframe with the scraped data.
+
+    :param url: url to scrape
+    :param session: session to use
+    :return: dataframe with scraped data
+    """
     scrape_url = PropertyScraper(url, session)
     dataframe_to_print = scrape_url.scrape_property_info()
+    
     return pd.DataFrame(dataframe_to_print) if dataframe_to_print is not None else None
 
 def main():
+    
 
     weblinks = multiWeblinks()
-    write_json(weblinks)
+    write_json(list(set(weblinks)))
 
     with open('./data/raw/raw_weblinksimmo.json', 'r') as f:
         data = json.load(f)
 
-    columns = ["property_id", "locality_name", "postal_code", "streetname", "housenumber", "latitude", "longitude", 
-                    "property_type", "property_subtype", "price", "type_of_sale", "nb_of_rooms", "area", "kitchen_type",
+    columns = ["property_id", "locality_name", "postal_code", "street_name", "house_number", "latitude", "longitude", 
+                    "property_type", "property_subtype", "price", "type_of_sale", "number_of_rooms", "living_area", "kitchen_type",
                     "fully_equipped_kitchen", "furnished", "open_fire","terrace", "terrace_area","garden", "garden_area",
-                    "surface", "surface_area_plot", "nb_of_facades", "swimming_pool", "state_of_building"]
+                    "surface_of_good", "number_of_facades", "swimming_pool", "state_of_building"]
     df = pd.DataFrame(columns=columns)
 
     with requests.Session() as session:
